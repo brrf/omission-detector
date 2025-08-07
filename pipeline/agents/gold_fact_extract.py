@@ -103,15 +103,12 @@ def _to_hpifact(item: Dict[str, Any]) -> HPIFact:
         txt = (ev_obj.get("text") or "").strip()
         if txt:
             ev = EvidenceSpan(text=txt)
-
     # You asked the LLM to return the minimal HPIFact shape; the runtime dataclass
-    # also requires salience_weight. We default to 1 to avoid extra dependencies.
     return HPIFact(
         id=fid,
         code=code,
         polarity=polarity,
         value=value,
-        salience_weight=1,
         evidence_span=ev,
     )
 
@@ -121,7 +118,6 @@ def gold_fact_extract(state: PipelineState) -> PipelineState:
     1) Read omission_framework.yaml and pass it verbatim to the LLM
        together with the diarized transcript in state.transcript.
     2) Expect a JSON **list** of minimal HPIFact objects from the LLM.
-    3) Convert each to the runtime HPIFact dataclass (default salience_weight=1).
     4) Append to state.transcript_facts and return state.
     """
     framework_yaml = _read_framework_yaml()
@@ -140,10 +136,11 @@ def gold_fact_extract(state: PipelineState) -> PipelineState:
     for it in items:
         try:
             hpifacts.append(_to_hpifact(it if isinstance(it, dict) else {}))
-        except Exception:
+        except Exception as e:
+            print(f"Error processing item {it!r}: {e}")
             # Skip malformed entries rather than failing whole run
             continue
 
     # Append to state.transcript_facts
-    state.transcript_facts.extend(hpifacts)
+    state.transcript_facts = hpifacts
     return state

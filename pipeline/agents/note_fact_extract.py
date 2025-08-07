@@ -168,7 +168,7 @@ def _to_hpifact(item: Dict[str, Any], problems: List[Problem]) -> HPIFact:
     )
 
 
-def omissions_detector(state: PipelineState) -> PipelineState:
+def note_fact_extract(state: PipelineState) -> PipelineState:
     print("starting omissions detector")
     """
     1) Read omission_framework.yaml and pass it to the LLM with:

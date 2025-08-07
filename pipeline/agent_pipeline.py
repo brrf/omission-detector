@@ -8,25 +8,9 @@ import uuid
 
 from pipeline.state import PipelineState
 from langgraph.graph import StateGraph, START, END
-from pipeline.agents import (gold_fact_extract, problem_labeler)
-
-
-def _add_parent_edges(g: StateGraph, parents, child: str) -> None:
-    """Allow REQUIRED_KEYS to be a str or an iterable of parent node ids."""
-    if isinstance(parents, str):
-        g.add_edge(parents, child)
-        return
-    if isinstance(parents, Iterable):
-        for p in parents:
-            g.add_edge(p, child)
-        return
-    # fallback
-    g.add_edge(parents, child)
+from pipeline.agents import (gold_fact_extract, problem_labeler, omissions_detector)
 
 # --- Mock agent functions (no-ops) -----------------------------------
-def omission_detector(state: PipelineState) -> PipelineState:
-    return state
-
 def omission_scorer(state: PipelineState) -> PipelineState:
     return state
 
@@ -45,12 +29,12 @@ def build_graph():
     g.add_edge("GoldFacts",       "ProblemLabeler")
 
     # ─── Omission detection ─────────────────────────────────
-    g.add_node("OmissionDetector", omission_detector)
-    _add_parent_edges(g, "GoldFacts", "OmissionDetector")
+    g.add_node("OmissionsDetector", omissions_detector)
+    g.add_edge(["GoldFacts","ProblemLabeler"] , "OmissionsDetector")
 
     # ─── Scoring & emit ─────────────────────────────────────
     g.add_node("Scorer", omission_scorer)       # uses state.gold_facts + state.facts[…]
-    _add_parent_edges(g, ["OmissionDetector", "ProblemLabeler"], "Scorer")
+    g.add_edge(["OmissionsDetector", "ProblemLabeler"], "Scorer")
     g.add_edge("Scorer", "MetricOmitter")
 
     g.add_node("MetricOmitter", metric_omitter)
@@ -80,7 +64,6 @@ def run_pipeline(state):
     init_state = PipelineState(
         run_id        = state.get("run_id") or str(uuid.uuid4()),
         transcript    = state.get("transcript") or "",
-        note_baseline = None,  # not provided by run_all; leave as None
         source        = state.get("source"),
         pre_chart     = state.get("pre_chart"),
         interpreter   = state.get("interpreter"),

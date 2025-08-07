@@ -1,0 +1,350 @@
+taxonomy:
+  name: "Clinical HPI Taxonomy with Psychosocial & Context (D1–D9)"
+  version: "1.0.0"
+  last_updated: "2025-08-07"
+  weight_scale:
+    "3": "High impact on today's assessment/plan"
+    "1": "Relevant modifier or context"
+    "0": "Background/logistics; low direct impact today"
+  domains:
+
+    - id: D1
+      name: "Chief Concern & Context"
+      items:
+        - code: "D1.CC-01"
+          label: "Chief concern text"
+          definition: "Primary reason for visit, in patient’s words (verbatim or paraphrased)."
+          example: "Crushing chest pain since 7 AM."
+          weight: 3
+        - code: "D1.CC-02"
+          label: "Concise symptom phrase"
+          definition: "Short diagnostic stem when chief concern is vague."
+          example: "Follow-up for diabetes control."
+          weight: 3
+        - code: "D1.ONCTX-03"
+          label: "Precipitating context"
+          definition: "Immediate event or trigger that launched current episode."
+          example: "Started after shoveling snow."
+          weight: 3
+
+    - id: D2
+      name: "Symptom Qualifiers (OLDCARTS+)"
+      items:
+        - code: "D2.ON-01"
+          label: "Onset (timestamp)"
+          definition: "When symptom began (date/time or elapsed)."
+          example: "Began three days ago."
+          weight: 3
+        - code: "D2.LOC-02"
+          label: "Location"
+          definition: "Anatomic site or distribution."
+          example: "Right upper quadrant."
+          weight: 3
+        - code: "D2.DUR-03"
+          label: "Duration (per episode)"
+          definition: "Length of each episode or continuous run."
+          example: "Lasting 30 minutes at a time."
+          weight: 3
+        - code: "D2.CHAR-04"
+          label: "Character / quality"
+          definition: "Descriptive nature of symptom."
+          example: "Burning, stabbing pain."
+          weight: 3
+        - code: "D2.AG-05"
+          label: "Aggravating factors"
+          definition: "Anything that worsens the symptom."
+          example: "Worse on deep inspiration."
+          weight: 3
+        - code: "D2.AL-06"
+          label: "Alleviating factors"
+          definition: "Actions or meds that improve symptom."
+          example: "Relieved by antacids."
+          weight: 3
+        - code: "D2.RAD-07"
+          label: "Radiation"
+          definition: "Spread/path of pain or symptom."
+          example: "Radiates to left jaw."
+          weight: 3
+        - code: "D2.PAT-08"
+          label: "Timing/pattern"
+          definition: "Constant, intermittent, nocturnal, cyclical."
+          example: "Intermittent every evening."
+          weight: 3
+        - code: "D2.SEV-09"
+          label: "Severity / intensity"
+          definition: "Quantified or qualified intensity."
+          example: "9/10 pain."
+          weight: 3
+        - code: "D2.NUM-10"
+          label: "Quantifier / count"
+          definition: "Number of discrete events."
+          example: "Three vomiting episodes today."
+          weight: 1
+
+    - id: D3
+      name: "Associated & Pertinent Negatives"
+      items:
+        - code: "D3.POS-01"
+          label: "Associated positives"
+          definition: "Additional symptoms that co-occur."
+          example: "Nausea with the pain."
+          weight: 1
+        - code: "D3.PN-02"
+          label: "Pertinent negatives"
+          definition: "Denials that narrow differential."
+          example: "Denies shortness of breath."
+          weight: 1
+        - code: "D3.CONST-03"
+          label: "Constitutional symptoms"
+          definition: "Fever, chills, weight loss, fatigue."
+          example: "No fever or chills."
+          weight: 1
+        - code: "D3.SYS-04"
+          label: "System-specific review"
+          definition: "Other ROS positives outside primary system."
+          example: "No urinary burning."
+          weight: 0
+
+    - id: D4
+      name: "Temporal & Modifier Context"
+      items:
+        - code: "D4.TRAJ-01"
+          label: "Symptom trajectory"
+          definition: "Getting better, worse, or fluctuating."
+          example: "Pain steadily worsening."
+          weight: 3
+        - code: "D4.BASE-02"
+          label: "Baseline status"
+          definition: "Relevant baseline function or disease control."
+          example: "COPD baseline FEV1 45%."
+          weight: 3
+        - code: "D4.EXPO-03"
+          label: "Exposure / travel / contact"
+          definition: "Infectious, environmental, or occupational exposure relevant to illness."
+          example: "Recent cruise to Mexico."
+          weight: 3
+        - code: "D4.COMO-04"
+          label: "Relevant comorbidities"
+          definition: "Comorbidity that alters risk or management."
+          example: "On chronic steroids for lupus."
+          weight: 3
+        - code: "D4.MED-05"
+          label: "Meds influencing symptom"
+          definition: "Drugs that mask or provoke symptoms."
+          example: "Recently started prednisone."
+          weight: 1
+        - code: "D4.PREG-06"
+          label: "Pregnancy / lactation"
+          definition: "Status affecting assessment/plan."
+          example: "22 weeks pregnant."
+          weight: 3
+        - code: "D4.IMMU-07"
+          label: "Immune status"
+          definition: "Immunosuppression, HIV, chemo, biologicals."
+          example: "On rituximab therapy."
+          weight: 1
+
+    - id: D5
+      name: "Functional Impact"
+      items:
+        - code: "D5.ADL-01"
+          label: "ADL limitation"
+          definition: "Affects dressing, bathing, toileting, transfers, etc."
+          example: "Needs help climbing stairs."
+          weight: 1
+        - code: "D5.WORK-02"
+          label: "Occupational impact"
+          definition: "Missed work, restricted duties due to symptom."
+          example: "Off work since Monday."
+          weight: 1
+        - code: "D5.SLEEP-03"
+          label: "Sleep disturbance"
+          definition: "Trouble falling/staying asleep or non-restorative sleep due to symptom."
+          example: "Wakes up due to coughing."
+          weight: 1
+        - code: "D5.QOL-04"
+          label: "Quality-of-life metric"
+          definition: "Patient-reported decline in QoL or function."
+          example: "Pain prevents exercising."
+          weight: 0
+
+    - id: D6
+      name: "Prior Interventions & Diagnostic History"
+      items:
+        - code: "D6.SELF-01"
+          label: "Self-care attempted"
+          definition: "OTC meds, home remedies, or non-prescribed measures tried."
+          example: "Took ibuprofen with no relief."
+          weight: 1
+        - code: "D6.DIAG-02"
+          label: "Prior diagnostics"
+          definition: "Imaging/labs already done and results known."
+          example: "CT abdomen 6 mo ago negative."
+          weight: 1
+        - code: "D6.PROC-03"
+          label: "Prior procedures"
+          definition: "Surgeries or procedures relevant to current problem."
+          example: "Cholecystectomy in 2019."
+          weight: 1
+        - code: "D6.CONS-04"
+          label: "Specialist input"
+          definition: "Previous specialist evaluation or recommendations."
+          example: "Seen by cardiology last week."
+          weight: 1
+        - code: "D6.FAM-05"
+          label: "Family history modifier"
+          definition: "Family history that significantly modifies risk."
+          example: "Mother died of AAA at 50."
+          weight: 0
+
+    - id: D7
+      name: "Patient Goals & Perspective"
+      items:
+        - code: "D7.GOAL-01"
+          label: "Stated goal / desired outcome"
+          definition: "What the patient hopes to achieve today."
+          example: "Needs a work note."
+          weight: 1
+        - code: "D7.FEAR-02"
+          label: "Fear / concern"
+          definition: "Patient worries about condition, test, or treatment."
+          example: "Worried it’s cancer."
+          weight: 1
+        - code: "D7.PREF-03"
+          label: "Treatment preference / refusal"
+          definition: "Requests or declines for specific treatments."
+          example: "Prefers non-opioid meds."
+          weight: 1
+        - code: "D7.CULT-04"
+          label: "Cultural / spiritual factor"
+          definition: "Beliefs or practices impacting care."
+          example: "Requests female clinician."
+          weight: 0
+
+    - id: D8
+      name: "Risk & Safety-Net"
+      items:
+        - code: "D8.RF-01"
+          label: "Red-flag mentioned"
+          definition: "Provider discussed specific danger signs."
+          example: "Warned about sudden vision loss."
+          weight: 3
+        - code: "D8.RP-02"
+          label: "Return precautions"
+          definition: "Clear instructions on when/how to seek care."
+          example: "Return if pain > 8/10."
+          weight: 3
+        - code: "D8.SN-03"
+          label: "Safety-net plan / follow-up"
+          definition: "Follow-up appointment or call-back arranged."
+          example: "Follow-up in clinic in 48 hrs."
+          weight: 1
+        - code: "D8.CAP-04"
+          label: "Capacity & consent"
+          definition: "Decision-making capacity assessed or consent documented."
+          example: "Patient demonstrates understanding, agrees to plan."
+          weight: 1
+
+    - id: D9
+      name: "Psychosocial & Context"
+      items:
+        - code: "D9.TRAU-01"
+          label: "Past trauma / adverse experience"
+          definition: "Non-acute history of physical/sexual/emotional trauma relevant to coping or mental health."
+          example: "Single episode of childhood sexual abuse."
+          weight: 1
+        - code: "D9.STRESS-02"
+          label: "Recent psychosocial stressor"
+          definition: "Time-linked life event plausibly precipitating or worsening current symptoms."
+          example: "Overnight hospitalization with family member leading to sleep loss."
+          weight: 3
+        - code: "D9.CARE-03"
+          label: "Caregiver role / burden"
+          definition: "Provides care to a dependent; burden affects health or access."
+          example: "Primary caregiver for autistic teenager."
+          weight: 1
+        - code: "D9.SUP-04"
+          label: "Social support / key relationships"
+          definition: "Presence/absence of supportive relationships or notable conflict."
+          example: "Spouse observes behavioral changes; generally supportive."
+          weight: 1
+        - code: "D9.LIVE-05"
+          label: "Living situation & housing"
+          definition: "Household composition, stability, or safety that affects care."
+          example: "Lives with spouse and two children; stable housing."
+          weight: 1
+        - code: "D9.OCC-06"
+          label: "Occupation & work context (baseline)"
+          definition: "Job role/conditions or satisfaction influencing wellbeing (not symptom incapacity)."
+          example: "Works in park maintenance; enjoys job."
+          weight: 1
+        - code: "D9.ACT-07"
+          label: "Lifestyle activity pattern"
+          definition: "Regular exercise/hobby that modulates symptoms or baseline mood."
+          example: "Plays pickleball several mornings per week."
+          weight: 1
+        - code: "D9.SUB-08"
+          label: "Substance use baseline / change"
+          definition: "Current use or recent change in tobacco, alcohol, or drugs relevant to assessment."
+          example: "Stopped cannabis two months ago."
+          weight: 1
+        - code: "D9.SDOH-09"
+          label: "Resource strain / basic needs"
+          definition: "Financial, food, or housing insecurity impacting care or control of illness."
+          example: "Difficulty paying for medications this month."
+          weight: 3
+        - code: "D9.TRAN-10"
+          label: "Transportation / access barrier"
+          definition: "Distance, reliability, mobility limits restricting access to care."
+          example: "Prefers clinic near home due to limited transport."
+          weight: 1
+        - code: "D9.INS-11"
+          label: "Insurance / pharmacy logistics"
+          definition: "Coverage or dispensing details affecting medication access or adherence."
+          example: "Uses Rite Aid State St.; Medicare covers prescriptions."
+          weight: 0
+        - code: "D9.PREF-12"
+          label: "Care-delivery preference / conflict"
+          definition: "Site/modality/provider relationship preferences or avoidances."
+          example: "Avoids counselor who is a relative; prefers Boise location."
+          weight: 1
+        - code: "D9.COORD-13"
+          label: "External care team / providers"
+          definition: "Named outside clinicians or upcoming visits relevant to coordination."
+          example: "PCP is Dr Edwards; visit next month."
+          weight: 1
+        - code: "D9.LANG-14"
+          label: "Communication & language needs"
+          definition: "Interpreter need, hearing/vision barriers, or literacy limiting care."
+          example: "Requires Spanish interpreter."
+          weight: 3
+        - code: "D9.EDU-15"
+          label: "Health-education / skill instruction"
+          definition: "Non–safety-net counseling or skills taught for self-management."
+          example: "Taught correct home BP technique; teach-back successful."
+          weight: 1
+        - code: "D9.SAF-16"
+          label: "Interpersonal / home safety risk"
+          definition: "Current risk of violence or unsafe environment."
+          example: "Reports intimate-partner threats."
+          weight: 3
+        - code: "D9.LEG-17"
+          label: "Legal / guardianship constraints"
+          definition: "Custody, guardianship, immigration, or legal status affecting care."
+          example: "Sister is medical POA."
+          weight: 1
+        - code: "D9.TECH-18"
+          label: "Technology access for care"
+          definition: "Access/ability to use telehealth, portal, or required devices."
+          example: "No smartphone; prefers phone calls."
+          weight: 0
+        - code: "D9.ISO-19"
+          label: "Social isolation / loneliness"
+          definition: "Limited social contact or loneliness relevant to health."
+          example: "Lives alone; few regular contacts."
+          weight: 1
+        - code: "D9.HLIT-20"
+          label: "Health literacy & learning needs"
+          definition: "Baseline ability to understand health information and instructions."
+          example: "Prefers plain-language handouts; low literacy."
+          weight: 1

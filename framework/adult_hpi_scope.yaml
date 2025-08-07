@@ -1,0 +1,178 @@
+meta:
+  taxonomy_name: "Clinical HPI Taxonomy with Psychosocial & Context (D1–D9)"
+  taxonomy_version: "1.0.0"
+  profile: "adult"
+  updated: "2025-08-07"
+  scope_values: ["always", "conditional", "exclude"]
+defaults:
+  materiality_threshold_weight: 1   # Only flag omissions with weight >= 1
+codes:
+  # D1 — Chief Concern & Context
+  - code: D1.CC-01   # Chief concern text
+    scope: always
+    when: "Primary reason for visit in patient's words or clear paraphrase."
+  - code: D1.CC-02   # Concise symptom phrase
+    scope: always
+  - code: D1.ONCTX-03  # Precipitating context
+    scope: conditional
+    when: "If a trigger plausibly launched today's episode (e.g., exertion, travel, diet)."
+
+  # D2 — Symptom Qualifiers (OLDCARTS+)
+  - code: D2.ON-01   # Onset
+    scope: always
+  - code: D2.LOC-02  # Location
+    scope: always
+  - code: D2.DUR-03  # Duration per episode
+    scope: always
+  - code: D2.CHAR-04 # Character/quality
+    scope: always
+  - code: D2.AG-05   # Aggravating factors
+    scope: always
+  - code: D2.AL-06   # Alleviating factors
+    scope: always
+  - code: D2.RAD-07  # Radiation
+    scope: always
+  - code: D2.PAT-08  # Timing/pattern
+    scope: always
+  - code: D2.SEV-09  # Severity
+    scope: always
+  - code: D2.NUM-10  # Quantifier/count
+    scope: conditional
+    when: "When discrete events change management (e.g., # of emesis, syncope episodes)."
+
+  # D3 — Associated & Pertinent Negatives
+  - code: D3.POS-01  # Associated positives
+    scope: conditional
+    when: "Only if it modifies today's differential or plan."
+  - code: D3.PN-02   # Pertinent negatives
+    scope: always
+    when: "Denials that narrow risk (e.g., chest pressure, orthopnea, fever with edema/SOB)."
+  - code: D3.CONST-03  # Constitutional symptoms
+    scope: conditional
+    when: "Fever/chills/weight change/fatigue relevant to the presenting problem."
+  - code: D3.SYS-04    # System-specific review
+    scope: conditional
+    when: "ROS positives/negatives outside primary system **only** if they change A/P."
+
+  # D4 — Temporal & Modifier Context
+  - code: D4.TRAJ-01  # Symptom trajectory
+    scope: always
+  - code: D4.BASE-02  # Baseline status
+    scope: always
+    when: "Baseline function/control vs. today (e.g., DOE unchanged vs worse)."
+  - code: D4.EXPO-03  # Exposure/travel/contact
+    scope: conditional
+    when: "Infectious/environmental/occupational exposures pertinent to current illness."
+  - code: D4.COMO-04  # Relevant comorbidities
+    scope: conditional
+    when: "Only comorbidities that alter risk, triage, or treatment today."
+  - code: D4.MED-05   # Meds influencing symptom
+    scope: always
+    when: "Start/stop/hold and **reason** if it provokes/masks/modifies symptoms."
+  - code: D4.PREG-06  # Pregnancy/lactation
+    scope: conditional
+    when: "If pregnancy or lactation could affect risk, testing, or treatment."
+  - code: D4.IMMU-07  # Immune status
+    scope: conditional
+    when: "Known immunosuppression or therapy affecting infection risk/course."
+
+  # D5 — Functional Impact
+  - code: D5.ADL-01   # ADL limitation
+    scope: conditional
+    when: "If symptom limits self‑care/mobility (e.g., walking limited by edema)."
+  - code: D5.WORK-02  # Occupational impact
+    scope: conditional
+    when: "If work restrictions/absences matter to plan or counseling."
+  - code: D5.SLEEP-03 # Sleep disturbance
+    scope: conditional
+    when: "If symptom disturbs sleep and influences management."
+  - code: D5.QOL-04   # Quality-of-life metric
+    scope: conditional
+    when: "Only if it materially affects today’s decisions."
+
+  # D6 — Prior Interventions & Diagnostic History
+  - code: D6.SELF-01  # Self-care attempted
+    scope: conditional
+  - code: D6.DIAG-02  # Prior diagnostics (results known)
+    scope: conditional
+    when: "Only items that reframe today’s differential (e.g., recent normal renal US)."
+  - code: D6.PROC-03  # Prior procedures
+    scope: conditional
+    when: "If directly relevant to the presenting problem."
+  - code: D6.CONS-04  # Specialist input
+    scope: conditional
+    when: "Recent specialist advice that changes today’s plan/risk."
+  - code: D6.FAM-05   # Family history modifier
+    scope: conditional
+    when: "Strong FH that significantly modifies risk for today’s problem."
+
+  # D7 — Patient Goals & Perspective
+  - code: D7.GOAL-01  # Stated goal
+    scope: conditional
+  - code: D7.FEAR-02  # Fear/concern
+    scope: conditional
+  - code: D7.PREF-03  # Treatment preference/refusal
+    scope: conditional
+  - code: D7.CULT-04  # Cultural/spiritual factor
+    scope: conditional
+    when: "If it clearly affects today’s management."
+
+  # D8 — Risk & Safety-Net (generally not HPI)
+  - code: D8.RF-01    # Red-flag mentioned
+    scope: exclude
+  - code: D8.RP-02    # Return precautions
+    scope: exclude
+  - code: D8.SN-03    # Safety-net plan / follow-up
+    scope: exclude
+  - code: D8.CAP-04   # Capacity & consent
+    scope: exclude
+
+  # D9 — Psychosocial & Context
+  - code: D9.TRAU-01  # Past trauma/adverse experience
+    scope: conditional
+    when: "Only if it modulates coping/adherence for today’s issue."
+  - code: D9.STRESS-02  # Recent psychosocial stressor
+    scope: conditional
+    when: "If temporally linked and plausibly precipitating/worsening symptoms."
+  - code: D9.CARE-03  # Caregiver role/burden
+    scope: conditional
+  - code: D9.SUP-04   # Social support / key relationships
+    scope: conditional
+  - code: D9.LIVE-05  # Living situation & housing
+    scope: conditional
+  - code: D9.OCC-06   # Occupation & work context (baseline)
+    scope: conditional
+  - code: D9.ACT-07   # Lifestyle activity pattern
+    scope: conditional
+  - code: D9.SUB-08   # Substance use baseline/change
+    scope: conditional
+    when: "Include when use or recent change can explain or worsen symptoms."
+  - code: D9.SDOH-09  # Resource strain / basic needs
+    scope: conditional
+    when: "If it impedes access to care or adherence related to today’s problem."
+  - code: D9.TRAN-10  # Transportation / access barrier
+    scope: conditional
+  - code: D9.INS-11   # Insurance / pharmacy logistics
+    scope: exclude
+  - code: D9.PREF-12  # Care-delivery preference / conflict
+    scope: conditional
+  - code: D9.COORD-13 # External care team / providers
+    scope: conditional
+    when: "If outside clinicians materially influence today’s plan for the problem."
+  - code: D9.LANG-14  # Communication & language needs
+    scope: conditional
+    when: "If barrier affects the history quality or safety today."
+  - code: D9.EDU-15   # Health-education / skill instruction
+    scope: exclude
+  - code: D9.SAF-16   # Interpersonal/home safety risk
+    scope: conditional
+    when: "If present; escalate priority."
+  - code: D9.LEG-17   # Legal / guardianship constraints
+    scope: conditional
+  - code: D9.TECH-18  # Technology access for care
+    scope: exclude
+  - code: D9.ISO-19   # Social isolation / loneliness
+    scope: conditional
+  - code: D9.HLIT-20  # Health literacy & learning needs
+    scope: conditional
+    when: "If it limits accurate HPI capture or adherence today."

@@ -10,4 +10,8 @@ tqdm>=4.66,<5.0
 
 # Read .env values for your OpenAI key (llm_utils relies on it)
 python-dotenv>=1.0,<2.0
-# ─────────────────────────────────────────────────────────────────────────────
+
+# LangGraph pipeline + optional diagram rendering
+langgraph>=0.2.34,<0.3
+typing-extensions>=4.10,<5.0
+ipython>=8.20,<9.0        # only used if you display() things in notebooks

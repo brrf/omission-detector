@@ -35,11 +35,9 @@ class HPIFact:
     code: str                       # e.g., "D2.ON-01"
     polarity: Literal["present", "denied", "uncertain"]
     value: str                      # normalized content (e.g., "onset: 7-10 days ago")
-    salience_weight: int            # 3/1/0 (from taxonomy)
     problem_id: Optional[str] = None  # assigned by BucketLabeler
     time_scope: Optional[Literal["acute", "chronic", "baseline", "changed"]] = None
     evidence_span: Optional[EvidenceSpan] = None
-    hpi_in_scope: bool = True
 
 @dataclass
 class Problem:

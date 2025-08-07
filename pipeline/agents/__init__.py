@@ -1,0 +1,1 @@
+from .gold_fact_extract import gold_fact_extract

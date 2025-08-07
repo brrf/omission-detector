@@ -9,8 +9,7 @@ import uuid
 from pipeline.state import PipelineState
 from langgraph.graph import StateGraph, START, END
 from dotenv import load_dotenv
-
-load_dotenv()  # safe no-op if .env not present
+from pipeline.agents import (gold_fact_extract)
 
 
 def _add_parent_edges(g: StateGraph, parents, child: str) -> None:
@@ -26,9 +25,6 @@ def _add_parent_edges(g: StateGraph, parents, child: str) -> None:
     g.add_edge(parents, child)
 
 # --- Mock agent functions (no-ops) -----------------------------------
-def gold_fact_extract(state: PipelineState) -> PipelineState:
-    return state
-
 def bucket_labeler(state: PipelineState) -> PipelineState:
     return state
 

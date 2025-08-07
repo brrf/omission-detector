@@ -144,7 +144,6 @@ def problem_labeler(state: PipelineState) -> PipelineState:
     # 4) Merge Problems into state (avoid duplicates by id)
     existing_ids = {p.id for p in state.problems}
     new_problems = [p for p in name_to_problem.values() if p.id not in existing_ids]
-    print(new_problems)
     state.problems.extend(new_problems)
 
     return state

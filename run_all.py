@@ -129,7 +129,7 @@ def build_state_from_row(row: Dict[str, str]) -> Dict[str, Any]:
     transcript_text = diarized or fallback_transcript or ""
 
     pre_chart = _none_if_blank(row.get(COL_PREVISIT))
-    note_baseline = _none_if_blank(row.get(COL_HPI))
+    hpi_input = _none_if_blank(row.get(COL_HPI))
 
     interpreter_numbers = _parse_numbers_field(row.get(COL_INTERP_NUM))
     interpreter_intro = _none_if_blank(row.get(COL_INTERP_INTRO))
@@ -148,7 +148,7 @@ def build_state_from_row(row: Dict[str, str]) -> Dict[str, Any]:
         "transcript": transcript_text,   # <— diarized transcript (preferred)
         "pre_chart": pre_chart,          # <— NEW: pre-charting text (string or None)
         "interpreter": interpreter_obj,  # <— NEW: dict or None
-        "note_baseline": note_baseline,          # <— generated HPI you want to evaluate/compare
+        "hpi_input": hpi_input,          # <— generated HPI you want to evaluate/compare
 
     }
 

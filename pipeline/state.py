@@ -60,7 +60,6 @@ class PipelineState:
     # Core identifiers / inputs
     run_id:        Annotated[str,           lambda x, y: y]
     transcript:    Annotated[str,           lambda x, y: y]
-    note_baseline: Annotated[Optional[str], lambda x, y: y] = None
 
     # Exact fields provided by run_all.py
     source:      Annotated[Optional[str],            lambda x, y: y] = None

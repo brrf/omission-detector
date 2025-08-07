@@ -8,8 +8,7 @@ import uuid
 
 from pipeline.state import PipelineState
 from langgraph.graph import StateGraph, START, END
-from dotenv import load_dotenv
-from pipeline.agents import (gold_fact_extract)
+from pipeline.agents import (gold_fact_extract, problem_labeler)
 
 
 def _add_parent_edges(g: StateGraph, parents, child: str) -> None:
@@ -25,9 +24,6 @@ def _add_parent_edges(g: StateGraph, parents, child: str) -> None:
     g.add_edge(parents, child)
 
 # --- Mock agent functions (no-ops) -----------------------------------
-def bucket_labeler(state: PipelineState) -> PipelineState:
-    return state
-
 def omission_detector(state: PipelineState) -> PipelineState:
     return state
 
@@ -45,8 +41,8 @@ def build_graph():
     g.add_edge(START, "GoldFacts")
     
     # ─── Independent branch C: gold facts → buckets
-    g.add_node("BucketLabeler",  bucket_labeler)
-    g.add_edge("GoldFacts",       "BucketLabeler")
+    g.add_node("ProblemLabeler",  problem_labeler)
+    g.add_edge("GoldFacts",       "ProblemLabeler")
 
     # ─── Omission detection ─────────────────────────────────
     g.add_node("OmissionDetector", omission_detector)
@@ -54,7 +50,7 @@ def build_graph():
 
     # ─── Scoring & emit ─────────────────────────────────────
     g.add_node("Scorer", omission_scorer)       # uses state.gold_facts + state.facts[…]
-    _add_parent_edges(g, ["OmissionDetector", "BucketLabeler"], "Scorer")
+    _add_parent_edges(g, ["OmissionDetector", "ProblemLabeler"], "Scorer")
     g.add_edge("Scorer", "MetricOmitter")
 
     g.add_node("MetricOmitter", metric_omitter)

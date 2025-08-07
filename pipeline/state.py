@@ -35,9 +35,10 @@ class HPIFact:
     code: str                       # e.g., "D2.ON-01"
     polarity: Literal["present", "denied", "uncertain"]
     value: str                      # normalized content (e.g., "onset: 7-10 days ago")
-    problem_id: Optional[str] = None  # assigned by BucketLabeler
+    problem_id: Optional[str] = None  # assigned by ProblemLabeler
     time_scope: Optional[Literal["acute", "chronic", "baseline", "changed"]] = None
     evidence_span: Optional[EvidenceSpan] = None
+
 
 @dataclass
 class Problem:

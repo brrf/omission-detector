@@ -113,8 +113,6 @@ def omissions_detector(state: PipelineState) -> PipelineState:
             prompt = _build_prompt(tf, candidates)
             resp = _llm_json_only(prompt)
             status = str(resp.get("status", "omitted")).lower()
-            if (status == "omitted"):
-                print(resp)
             if status not in {"present", "omitted", "conflict"}:
                 status = "omitted"
 

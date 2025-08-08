@@ -8,12 +8,9 @@ import uuid
 
 from pipeline.state import PipelineState
 from langgraph.graph import StateGraph, START, END
-from pipeline.agents import (gold_fact_extract, problem_labeler, note_fact_extract, omissions_detector)
+from pipeline.agents import (gold_fact_extract, problem_labeler, note_fact_extract, omissions_detector, scorer)
 
 # --- Mock agent functions (no-ops) -----------------------------------
-def omission_scorer(state: PipelineState) -> PipelineState:
-    return state
-
 def metric_omitter(state: PipelineState) -> PipelineState:
     return state
 
@@ -36,7 +33,7 @@ def build_graph():
     g.add_edge(["NoteFactExtract", "ProblemLabeler"], "OmissionsDetector")
 
     # ─── Scoring & emit ─────────────────────────────────────
-    g.add_node("Scorer", omission_scorer)       # uses state.gold_facts + state.facts[…]
+    g.add_node("Scorer", scorer)       # uses state.gold_facts + state.facts[…]
     g.add_node("MetricOmitter", metric_omitter)
     g.add_edge("OmissionsDetector", "Scorer")
     g.add_edge("Scorer", "MetricOmitter")

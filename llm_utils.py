@@ -7,7 +7,7 @@ _client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"), timeout=30,
     max_retries=2)
 
 
-def call_llm(model: str, prompt: str, temperature=0) -> tuple[str, dict]:
+def call_llm(model: str, prompt: str, temperature=0) -> str:
     """
     Centralized LLM caller.  
     """    

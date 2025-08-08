@@ -116,13 +116,10 @@ def omissions_detector(state: PipelineState) -> PipelineState:
             if status not in {"present", "omitted", "conflict"}:
                 status = "omitted"
 
-        # keep this simple; Phase 2 scorer can revise if needed
-        reco = "HPI" if status in {"omitted", "conflict"} else "not_relevant"
-
         out.append(FactClassification(
             fact_id=tf.id,
             status=status,
-            recommended_inclusion=reco,
+            recommended_inclusion=None,
             materiality=0.0,
             priority_label=None,
         ))

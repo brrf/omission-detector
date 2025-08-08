@@ -4,3 +4,4 @@ from .note_fact_extract import note_fact_extract
 from .omissions_detector import omissions_detector
 from .scorer import scorer
 from .metric_omitter import metric_omitter
+from .semantic_omission_filter import semantic_omission_filter

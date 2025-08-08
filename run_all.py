@@ -46,7 +46,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument(
         "--input",
         "-i",
-        default="diarized.csv",
+        default="raw_data/omissions_sample_encounters_diarized.csv",
         help="Path to input CSV (default: diarized.csv)",
     )
     parser.add_argument(

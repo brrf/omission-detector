@@ -149,8 +149,6 @@ def _llm_label(batch: List[str]) -> List[str]:
         labels = ast.literal_eval(raw)  # fallback
 
     if not isinstance(labels, list) or len(labels) != len(batch):
-        print("this does happen")
-        print(batch, labels, prompt)
         raise RuntimeError(f"Unexpected LLM response:\n{raw}")
 
     return [lbl.upper() for lbl in labels]
@@ -165,7 +163,6 @@ def _tag_sentences(sents: List[str]) -> List[str]:
             if len(labels) == len(batch):
                 tags.extend(labels)
                 break
-            print("this never happens")
     return tags
 
 def _merge_turns(sents: List[str], tags: List[str]) -> List[Tuple[str, str]]:

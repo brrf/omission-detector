@@ -74,7 +74,6 @@ class PipelineState:
     note_facts:       Annotated[List[HPIFact],       merge_union_seq] = field(default_factory=list)
     problems:         Annotated[List[Problem],       merge_union_seq] = field(default_factory=list)
 
-    classifications:  Annotated[List[FactClassification], merge_union_seq] = field(default_factory=list)
-    prioritized:      Annotated[List[FactClassification], merge_union_seq] = field(default_factory=list)
-
+    classifications:  Annotated[List[FactClassification], lambda old, new: new] = field(default_factory=list)
+    prioritized:      Annotated[List[FactClassification], lambda old, new: new] = field(default_factory=list)
     metrics:          Annotated[Dict[str, Any],      lambda x, y: y]  = field(default_factory=dict)

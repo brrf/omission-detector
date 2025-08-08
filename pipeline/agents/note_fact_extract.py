@@ -140,7 +140,7 @@ def _map_problem_id(
     return None
 
 
-def _to_hpifact(item: Dict[str, Any], problems: List[Problem]) -> HPIFact:
+def _to_hpifact(item: Dict[str, Any], problems: List[Problem], *, is_prechart: bool = False) -> HPIFact:
     code = (item.get("code") or "UNMAPPED").strip()
     polarity = _norm_polarity(item.get("polarity"))
     value = (item.get("value") or "").strip()
@@ -165,6 +165,7 @@ def _to_hpifact(item: Dict[str, Any], problems: List[Problem]) -> HPIFact:
         problem_id=problem_id,
         time_scope=time_scope,   # may be None
         evidence_span=ev,
+        isPrechartFact=bool(is_prechart),  # note facts are not pre-chart by default
     )
 
 
@@ -176,7 +177,7 @@ def note_fact_extract(state: PipelineState) -> PipelineState:
     3) Convert each to the runtime HPIFact dataclass.
     4) Append to state.note_facts and return state.
     """
-    hpi_note = (state.hpi_input).strip()
+    hpi_note = (state.hpi_input or "").strip()
     if not hpi_note:
         # Nothing to do
         return state

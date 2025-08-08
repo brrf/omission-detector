@@ -38,6 +38,8 @@ class HPIFact:
     problem_id: Optional[str] = None  # assigned by ProblemLabeler
     time_scope: Optional[Literal["acute", "chronic", "baseline", "changed"]] = None
     evidence_span: Optional[EvidenceSpan] = None
+    # NEW: indicates the fact originated from pre-chart text (vs. live transcript)
+    isPrechartFact: bool = False
 
 
 @dataclass

@@ -167,6 +167,7 @@ def scorer(state: PipelineState) -> PipelineState:
         linkage_bonus = 0
         redundancy_penalty = 0
         active_today_bonus = 0
+        prechart_bonus = 0  # NEW: extra weight for omitted pre-chart facts
 
         # 3) LLM signals only for omitted/conflict
         if cls.status in {"omitted", "conflict"}:
@@ -192,8 +193,12 @@ def scorer(state: PipelineState) -> PipelineState:
             if active_today:
                 active_today_bonus = 1
 
+            # NEW: pre-chart omitted facts get +3 materiality
+            if cls.status == "omitted" and bool(getattr(tf, "isPrechartFact", False)):
+                prechart_bonus = 3
+
         # 4) Materiality score
-        materiality = taxonomy_weight + recency_bonus + linkage_bonus - redundancy_penalty + active_today_bonus
+        materiality = taxonomy_weight + recency_bonus + linkage_bonus - redundancy_penalty + active_today_bonus + prechart_bonus
 
         # 5) Update classification in-place
         cls.materiality = float(materiality)
@@ -214,6 +219,5 @@ def scorer(state: PipelineState) -> PipelineState:
 
     state.classifications = updated
     state.prioritized = prioritized
-
 
     return state

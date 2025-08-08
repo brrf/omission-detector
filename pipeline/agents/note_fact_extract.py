@@ -24,7 +24,7 @@ B) For each fact, assign **one best taxonomy code** from the YAML (e.g., "D2.ON-
 C) Set **polarity** to exactly one of: "present", "denied", "uncertain".
 D) Produce a concise, **normalized value** string (e.g., "onset: 3 days ago", "location: RUQ", "severity: 8/10").
 E) Include a short **evidence_span** with the exact quote from the HPI NOTE that supports the fact.
-F) For each fact, choose a **problem_id** from the PROBLEM LIST (use the `id` field). If nothing clearly applies, set it to null.
+F) For each fact, choose a **problem_id** from the PROBLEM LIST (use the `id` field).
 G) If applicable, add **time_scope** as one of: "acute", "chronic", "baseline", "changed" (else omit or null).
 
 Return format:
@@ -169,7 +169,6 @@ def _to_hpifact(item: Dict[str, Any], problems: List[Problem]) -> HPIFact:
 
 
 def note_fact_extract(state: PipelineState) -> PipelineState:
-    print("starting omissions detector")
     """
     1) Read omission_framework.yaml and pass it to the LLM with:
          - the current problem list (state.problems) with ids+names
@@ -178,7 +177,6 @@ def note_fact_extract(state: PipelineState) -> PipelineState:
     4) Append to state.note_facts and return state.
     """
     hpi_note = (state.hpi_input).strip()
-    print(hpi_note)
     if not hpi_note:
         # Nothing to do
         return state

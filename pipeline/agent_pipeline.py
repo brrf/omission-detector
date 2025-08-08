@@ -8,11 +8,7 @@ import uuid
 
 from pipeline.state import PipelineState
 from langgraph.graph import StateGraph, START, END
-from pipeline.agents import (gold_fact_extract, problem_labeler, note_fact_extract, omissions_detector, scorer)
-
-# --- Mock agent functions (no-ops) -----------------------------------
-def metric_omitter(state: PipelineState) -> PipelineState:
-    return state
+from pipeline.agents import (gold_fact_extract, problem_labeler, note_fact_extract, omissions_detector, scorer, metric_omitter)
 
 # ---------------- Build Graph -----------------------------------------
 def build_graph():

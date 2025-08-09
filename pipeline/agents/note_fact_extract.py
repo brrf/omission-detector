@@ -1,4 +1,4 @@
-# pipeline/agents/omissions_detector.py
+# pipeline/agents/note_fact_extract.py
 from __future__ import annotations
 
 import json
@@ -9,6 +9,11 @@ from typing import Any, Dict, List, Optional
 
 from pipeline.state import PipelineState, HPIFact, EvidenceSpan, Problem
 from llm_utils import call_llm
+
+# NEW: imports for eval against annotations
+import re
+import yaml
+from rapidfuzz import fuzz
 
 _MODEL = "gpt-4o-mini"
 
@@ -169,6 +174,163 @@ def _to_hpifact(item: Dict[str, Any], problems: List[Problem], *, is_prechart: b
     )
 
 
+# ---------- EVAL against annotations/hpi_facts/{run_id}.yaml ----------
+
+_SIM_THRESHOLD = 0.80  # match on evidence text within code bucket
+
+def _repo_root_from_here() -> Path:
+    here = Path(__file__).resolve()
+    for base in [here.parent, *here.parents]:
+        if (base / "annotations").exists() and (base / "framework").exists():
+            return base
+    return Path.cwd()
+
+def _find_hpi_annotation_file(run_id: Optional[str]) -> Optional[Path]:
+    if not run_id:
+        return None
+    root = _repo_root_from_here()
+    fp = root / "annotations" / "hpi_facts" / f"{run_id}.yaml"
+    return fp if fp.exists() else None
+
+def _parse_annotations_yaml(path: Path) -> List[Dict[str, str]]:
+    """
+    Expect a YAML list of:
+      - code: "D2.ON-01"
+        evidence_span: "verbatim quote from HPI"
+    """
+    data = yaml.safe_load(path.read_text(encoding="utf-8"))
+    if not isinstance(data, list):
+        raise ValueError(f"{path} must be a YAML list of items.")
+    out: List[Dict[str, str]] = []
+    for idx, item in enumerate(data):
+        if not isinstance(item, dict):
+            raise ValueError(f"{path} item #{idx+1} must be a mapping.")
+        code = (item.get("code") or "").strip()
+        ev = item.get("evidence_span")
+        if not code:
+            raise ValueError(f"{path} item #{idx+1} missing 'code'.")
+        if not isinstance(ev, str):
+            raise ValueError(f"{path} item #{idx+1} 'evidence_span' must be a string.")
+        out.append({"code": code, "evidence": ev.strip()})
+    return out
+
+def _normalize_text(s: Optional[str]) -> str:
+    if not s:
+        return ""
+    s = s.strip().lower()
+    s = re.sub(r"\s+", " ", s)
+    return s
+
+def _pairwise_score(a: str, b: str) -> float:
+    return fuzz.ratio(_normalize_text(a), _normalize_text(b)) / 100.0
+
+def _greedy_match_by_code(preds, golds, threshold: float):
+    """
+    preds: [(pred_idx, pred_ev)], golds: [(gold_idx, gold_ev)]
+    return [(pred_idx, gold_idx, sim), ...] greedily by highest similarity
+    """
+    scored = []
+    for i, pev in preds:
+        for j, gev in golds:
+            sim = _pairwise_score(pev, gev)
+            if sim >= threshold:
+                scored.append((sim, i, j))
+    scored.sort(reverse=True)
+    used_p, used_g = set(), set()
+    pairs = []
+    for sim, i, j in scored:
+        if i in used_p or j in used_g:
+            continue
+        used_p.add(i); used_g.add(j)
+        pairs.append((i, j, sim))
+    return pairs
+
+def _compute_code_only_counts(pred_codes: List[str], gold_codes: List[str]):
+    from collections import Counter
+    pc = Counter(pred_codes); gc = Counter(gold_codes)
+    tp = sum(min(pc[c], gc[c]) for c in set(pc) | set(gc))
+    fp = len(pred_codes) - tp
+    fn = len(gold_codes) - tp
+    return tp, fp, fn
+
+def _safe_prf(tp: int, fp: int, fn: int):
+    p = tp / (tp + fp) if (tp + fp) else 0.0
+    r = tp / (tp + fn) if (tp + fn) else 0.0
+    f = (2 * p * r / (p + r)) if (p + r) else 0.0
+    return p, r, f
+
+def _evaluate_hpi_against_annotations(run_id: Optional[str], hpifacts: List[HPIFact]) -> Dict[str, Any]:
+    """
+    Compare NOTE-extracted HPIFacts to annotations/hpi_facts/{run_id}.yaml.
+    Structure mirrors gold_fact_extract()'s eval so dashboard code can reuse it.
+    """
+    ann_path = _find_hpi_annotation_file(run_id)
+    if not ann_path:
+        return {"found": False, "reason": "annotation_file_not_found", "run_id": run_id}
+
+    gold_items = _parse_annotations_yaml(ann_path)
+
+    preds = []
+    for f in hpifacts or []:
+        code = (getattr(f, "code", None) or "").strip()
+        ev = getattr(getattr(f, "evidence_span", None), "text", None)
+        ev = (ev or "").strip()
+        if code:
+            preds.append({"id": f.id, "code": code, "evidence": ev})
+
+    golds = [{"code": g["code"].strip(), "evidence": (g["evidence"] or "").strip()} for g in gold_items]
+
+    from collections import defaultdict
+    by_code_pred, by_code_gold = defaultdict(list), defaultdict(list)
+    for i, pr in enumerate(preds):
+        by_code_pred[pr["code"]].append((i, pr["evidence"]))
+    for j, gd in enumerate(golds):
+        by_code_gold[gd["code"]].append((j, gd["evidence"]))
+
+    matches = []
+    for code in set(by_code_pred) | set(by_code_gold):
+        matches.extend(_greedy_match_by_code(by_code_pred.get(code, []), by_code_gold.get(code, []), _SIM_THRESHOLD))
+
+    tp = len(matches)
+    fp = len(preds) - tp
+    fn = len(golds) - tp
+    precision, recall, f1 = _safe_prf(tp, fp, fn)
+
+    avg_sim = (sum(sim for _, _, sim in matches) / tp) if tp else 0.0
+
+    tp_c, fp_c, fn_c = _compute_code_only_counts([p["code"] for p in preds], [g["code"] for g in golds])
+    p_c, r_c, f_c = _safe_prf(tp_c, fp_c, fn_c)
+
+    sample_matches = []
+    for (pi, gj, sim) in sorted(matches, key=lambda x: x[2], reverse=True)[:50]:
+        sample_matches.append({
+            "pred_id": preds[pi]["id"],
+            "code": preds[pi]["code"],
+            "pred_evidence": preds[pi]["evidence"],
+            "gold_evidence": golds[gj]["evidence"],
+            "similarity": round(sim, 4),
+        })
+
+    return {
+        "found": True,
+        "run_id": run_id,
+        "annotation_path": str(ann_path),
+        "n_pred": len(preds),
+        "n_gold": len(golds),
+        "strict": {
+            "threshold": _SIM_THRESHOLD,
+            "tp": tp, "fp": fp, "fn": fn,
+            "precision": precision, "recall": recall, "f1": f1,
+            "avg_similarity": avg_sim,
+            "matches_preview": sample_matches,
+        },
+        "code_only": {
+            "tp": tp_c, "fp": fp_c, "fn": fn_c,
+            "precision": p_c, "recall": r_c, "f1": f_c,
+        },
+    }
+
+
 def note_fact_extract(state: PipelineState) -> PipelineState:
     """
     1) Read omission_framework.yaml and pass it to the LLM with:
@@ -176,6 +338,7 @@ def note_fact_extract(state: PipelineState) -> PipelineState:
     2) Expect a JSON **list** of HPIFact-like dicts (see prompt).
     3) Convert each to the runtime HPIFact dataclass.
     4) Append to state.note_facts and return state.
+    5) NEW: Evaluate against annotations/hpi_facts/<run_id>.yaml and stash in state.metrics['note_eval'].
     """
     hpi_note = (state.hpi_input or "").strip()
     if not hpi_note:
@@ -204,4 +367,14 @@ def note_fact_extract(state: PipelineState) -> PipelineState:
 
     # Append to state.note_facts
     state.note_facts.extend(hpifacts)
+
+    # NEW: metrics for note_fact_extract vs annotations/hpi_facts
+    try:
+        eval_blob = _evaluate_hpi_against_annotations(state.run_id, hpifacts)
+    except Exception as e:
+        eval_blob = {"found": False, "error": str(e), "run_id": state.run_id}
+
+    state.metrics = state.metrics or {}
+    state.metrics["note_eval"] = eval_blob
+
     return state

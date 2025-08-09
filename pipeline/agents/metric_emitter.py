@@ -1,5 +1,5 @@
-# pipeline/agents/metric_omitter.py
-# --- Persist prioritized omissions + per-run blobs + gold overlap metrics
+# pipeline/agents/metric_emitter.py
+# Persist prioritized omissions + per-run blobs + gold/note overlap metrics
 import os, json, csv, pathlib
 from datetime import datetime
 from pipeline.state import PipelineState
@@ -18,7 +18,8 @@ def _append_csv_row(path, header, row_dict):
 
 def _flatten_gold_eval(run_id: str, ts: str, ge: dict) -> dict:
     """
-    Convert state.metrics['gold_eval'] to a single CSV row for quick dashboards.
+    Flatten state.metrics['gold_eval'] (or note_eval) to a single CSV row for dashboards.
+    The schema is shared by both so we can reuse it.
     """
     base = {
         "ts": ts,
@@ -54,12 +55,12 @@ def _flatten_gold_eval(run_id: str, ts: str, ge: dict) -> dict:
 def metric_emitter(state: PipelineState) -> PipelineState:
     """
     Persist prioritized omissions + a compact per-run blob for humans & evals.
-    Also persists gold-overlap metrics if present.
+    Also persists gold-overlap metrics and HPI note-overlap metrics if present.
     """
     ts = datetime.utcnow().isoformat()
     run_id = state.run_id or "unknown"
 
-    # ========== A) Omissions per-fact (existing) JSONL ==========
+    # A) Omissions JSONL (one line per prioritized item)
     jsonl_path = _OUT_DIR / "omissions.jsonl"
     with open(jsonl_path, "a", encoding="utf-8") as f:
         for cls in (state.prioritized or []):
@@ -80,7 +81,7 @@ def metric_emitter(state: PipelineState) -> PipelineState:
             }
             f.write(json.dumps(rec, ensure_ascii=False) + "\n")
 
-    # ========== B) CSV mirror for omissions (existing) ==========
+    # B) CSV mirror for omissions
     csv_path = _OUT_DIR / "omissions.csv"
     header = ["ts","run_id","status","priority","materiality","code","value","polarity",
               "problem_id","time_scope","evidence_text","recommended_inclusion"]
@@ -102,8 +103,9 @@ def metric_emitter(state: PipelineState) -> PipelineState:
         }
         _append_csv_row(csv_path, header, row)
 
-    # ========== C) Per-run compact JSON (existing + gold_eval summary) ==========
+    # C) Per-run compact JSON (for quick drilldown in the dashboard)
     gold_eval = (state.metrics or {}).get("gold_eval", None)
+    note_eval = (state.metrics or {}).get("note_eval", None)
     by_run = {
         "run_id": run_id,
         "problems": [{"id": p.id, "name": p.name, "active_today": bool(p.active_today)} for p in (state.problems or [])],
@@ -125,24 +127,41 @@ def metric_emitter(state: PipelineState) -> PipelineState:
             } for c in (state.prioritized or [])
         ],
         "gold_eval": gold_eval if gold_eval else None,
+        "note_eval": note_eval if note_eval else None,
     }
     with open(_OUT_DIR / "by_run" / f"{run_id}.json", "w", encoding="utf-8") as f:
         json.dump(by_run, f, ensure_ascii=False, indent=2)
 
-    # ========== D) Persist gold overlap (new) ==========
+    # D) Persist transcript facts overlap (strict) if available
     if gold_eval and gold_eval.get("found"):
-        # 1) JSONL for full blob per run
+        # 1) Full blob per run (JSONL)
         ev_jsonl = _OUT_DIR / "gold_eval.jsonl"
         with open(ev_jsonl, "a", encoding="utf-8") as f:
             rec = {"ts": ts, "run_id": run_id, **gold_eval}
             f.write(json.dumps(rec, ensure_ascii=False) + "\n")
 
-        # 2) CSV summary row (compact, one line/run)
+        # 2) Compact CSV row (one per run, latest wins in dashboard)
         ev_csv = _OUT_DIR / "gold_eval.csv"
         row = _flatten_gold_eval(run_id, ts, gold_eval)
         header = ["ts","run_id","found","annotation_path","n_pred","n_gold",
                   "thr","tp","fp","fn","precision","recall","f1","avg_similarity","avg_rougeL_f",
                   "tp_code","fp_code","fn_code","precision_code","recall_code","f1_code"]
         _append_csv_row(ev_csv, header, row)
+
+    # E) Persist HPI note overlap (strict) if available
+    if note_eval and note_eval.get("found"):
+        # 1) Full blob per run (JSONL)
+        ne_jsonl = _OUT_DIR / "note_eval.jsonl"
+        with open(ne_jsonl, "a", encoding="utf-8") as f:
+            rec = {"ts": ts, "run_id": run_id, **note_eval}
+            f.write(json.dumps(rec, ensure_ascii=False) + "\n")
+
+        # 2) Compact CSV row (one per run, latest wins in dashboard)
+        ne_csv = _OUT_DIR / "note_eval.csv"
+        row = _flatten_gold_eval(run_id, ts, note_eval)  # identical schema to gold_eval
+        header = ["ts","run_id","found","annotation_path","n_pred","n_gold",
+                  "thr","tp","fp","fn","precision","recall","f1","avg_similarity","avg_rougeL_f",
+                  "tp_code","fp_code","fn_code","precision_code","recall_code","f1_code"]
+        _append_csv_row(ne_csv, header, row)
 
     return state

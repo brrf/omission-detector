@@ -1,0 +1,99 @@
+- code: "D2.LOC-02"
+  weight: 0
+  override_reason: "Anatomic location is not meaningful for cognitive complaints; deficits are diffuse rather than localized."
+
+- code: "D2.DUR-03"
+  weight: 1
+  override_reason: "For continuous cognitive decline, 'duration per episode' is less applicable; course is better captured by onset/trajectory."
+
+- code: "D2.AG-05"
+  weight: 1
+  override_reason: "Aggravating factors (e.g., fatigue, stress) are supportive context, not primary drivers of the differential."
+
+- code: "D2.AL-06"
+  weight: 1
+  override_reason: "Alleviating factors rarely change the diagnostic path in memory loss; contextual only."
+
+- code: "D2.RAD-07"
+  weight: 0
+  override_reason: "Radiation describes pain spread and does not apply to cognitive symptoms."
+
+- code: "D3.POS-01"
+  weight: 3
+  override_reason: "Associated neuro/behavioral symptoms (aphasia, visuospatial deficits, hallucinations, gait change) strongly shape the differential and workup."
+
+- code: "D3.PN-02"
+  weight: 3
+  override_reason: "Pertinent negatives (no delirium features, no focal deficit, no seizure) materially narrow risk and next steps."
+
+- code: "D3.CONST-03"
+  weight: 3
+  override_reason: "Fever, weight loss, or systemic symptoms point to reversible/systemic causes (infection, malignancy, endocrine) and alter workup."
+
+- code: "D3.SYS-04"
+  weight: 1
+  override_reason: "Cross‑system ROS (depression, thyroid, sleep apnea) can indicate reversible etiologies."
+
+- code: "D4.EXPO-03"
+  weight: 1
+  override_reason: "Infectious/travel exposures mainly matter for acute encephalopathy; less central to chronic memory complaints."
+
+- code: "D4.MED-05"
+  weight: 3
+  override_reason: "Medication effects (anticholinergics, benzodiazepines, opioids, AEDs) are common, reversible causes of cognitive impairment."
+
+- code: "D4.PREG-06"
+  weight: 0
+  override_reason: "Pregnancy/lactation seldom drives adult memory loss evaluation; deprioritize."
+
+- code: "D5.ADL-01"
+  weight: 3
+  override_reason: "ADL/IADL loss stages severity and drives safety, disposition, and caregiver needs."
+
+- code: "D5.SLEEP-03"
+  weight: 3
+  override_reason: "Sleep disorders (e.g., OSA) and sundowning patterns inform etiology and management."
+
+- code: "D5.QOL-04"
+  weight: 1
+  override_reason: "QoL change influences goals, caregiver planning, and thresholds for intervention."
+
+- code: "D6.DIAG-02"
+  weight: 3
+  override_reason: "Prior cognitive testing, imaging, and labs reframe today’s differential and prevent duplicate work."
+
+- code: "D6.CONS-04"
+  weight: 3
+  override_reason: "Recent neurology or neuropsych recommendations directly alter today's plan and follow‑up."
+
+- code: "D6.FAM-05"
+  weight: 3
+  override_reason: "Family history of dementia/early‑onset disease substantially modifies risk and genetic considerations."
+
+- code: "D8.CAP-04"
+  weight: 3
+  override_reason: "Cognitive impairment directly affects decision‑making capacity and consent requirements."
+
+- code: "D9.CARE-03"
+  weight: 3
+  override_reason: "Caregiver capacity/burden determines adherence, monitoring quality, and safety."
+
+- code: "D9.SUP-04"
+  weight: 3
+  override_reason: "Strength of social support predicts safety and feasibility of the care plan."
+
+- code: "D9.LIVE-05"
+  weight: 3
+  override_reason: "Living alone vs supervised settings materially changes risk (wandering, medication management, nutrition)."
+
+- code: "D9.SUB-08"
+  weight: 3
+  override_reason: "Alcohol and sedative/hypnotic use or recent changes can cause or worsen cognitive symptoms."
+
+- code: "D9.LEG-17"
+  weight: 3
+  override_reason: "POA/guardianship status affects consent, driving/finances, and care coordination."
+
+- code: "D9.HLIT-20"
+  weight: 3
+  override_reason: "Patient/caregiver health literacy impacts accurate history, test prep, and adherence; deficits can mimic or worsen impairment."

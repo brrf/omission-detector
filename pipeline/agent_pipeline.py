@@ -8,7 +8,7 @@ import uuid
 
 from pipeline.state import PipelineState
 from langgraph.graph import StateGraph, START, END
-from pipeline.agents import (gold_fact_extract, problem_labeler, note_fact_extract, omissions_detector, scorer, metric_omitter, semantic_omission_filter)
+from pipeline.agents import (gold_fact_extract, problem_labeler, note_fact_extract, omissions_detector, scorer, metric_emitter, semantic_omission_filter)
 
 # ---------------- Build Graph -----------------------------------------
 def build_graph():
@@ -33,7 +33,7 @@ def build_graph():
 
     # ─── Scoring & emit ─────────────────────────────────────
     g.add_node("Scorer", scorer)       # uses state.gold_facts + state.facts[…]
-    g.add_node("MetricOmitter", metric_omitter)
+    g.add_node("MetricOmitter", metric_emitter)
     g.add_edge("OmissionFilter", "Scorer")
     g.add_edge("Scorer", "MetricOmitter")
 

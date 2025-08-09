@@ -2,6 +2,7 @@
 from __future__ import annotations
 
 import json
+import re
 from pathlib import Path
 from typing import Any, Dict, List, Optional
 
@@ -11,6 +12,7 @@ from llm_utils import call_llm
 # We parse the framework YAML to get code -> weight.
 # PyYAML is small and reliable; added to requirements.txt below.
 import yaml
+from rapidfuzz import fuzz
 
 _MODEL = "gpt-4o-mini"
 
@@ -123,6 +125,170 @@ def _problems_payload(problems: List[Problem]) -> List[Dict[str, Any]]:
     return [{"id": p.id, "name": p.name, "active_today": bool(p.active_today)} for p in (problems or [])]
 
 
+# ---------------- prioritized omissions gold eval helpers ----------------
+
+_PRIOR_SIM_THRESHOLD = 0.80  # match on evidence text within code bucket
+
+def _repo_root_from_here() -> Path:
+    here = Path(__file__).resolve()
+    for base in [here.parent, *here.parents]:
+        if (base / "annotations").exists() and (base / "framework").exists():
+            return base
+    return Path.cwd()
+
+def _find_prioritized_annotation_file(run_id: Optional[str]) -> Optional[Path]:
+    if not run_id:
+        return None
+    root = _repo_root_from_here()
+    fp = root / "annotations" / "prioritized_omissions" / f"{run_id}.yaml"
+    return fp if fp.exists() else None
+
+def _parse_prioritized_yaml(path: Path) -> List[Dict[str, str]]:
+    data = yaml.safe_load(path.read_text(encoding="utf-8"))
+    if not isinstance(data, list):
+        raise ValueError(f"{path} must be a YAML list.")
+    out: List[Dict[str, str]] = []
+    for i, it in enumerate(data):
+        if not isinstance(it, dict):
+            raise ValueError(f"{path} item #{i+1} must be a mapping.")
+        code = (it.get("code") or "").strip()
+        ev = it.get("evidence_span")
+        if not code:
+            raise ValueError(f"{path} item #{i+1} missing 'code'.")
+        if not isinstance(ev, str):
+            raise ValueError(f"{path} item #{i+1} 'evidence_span' must be a string.")
+        out.append({"code": code, "evidence": ev.strip()})
+    return out
+
+def _normalize_text(s: Optional[str]) -> str:
+    if not s:
+        return ""
+    s = s.strip().lower()
+    s = re.sub(r"\s+", " ", s)
+    return s
+
+def _pairwise_score(a: str, b: str) -> float:
+    return fuzz.ratio(_normalize_text(a), _normalize_text(b)) / 100.0
+
+def _greedy_match_by_code(preds, golds, threshold: float):
+    """
+    preds: [(pred_idx, pred_ev)], golds: [(gold_idx, gold_ev)]
+    -> [(pred_idx, gold_idx, sim)]
+    """
+    scored = []
+    for i, pev in preds:
+        for j, gev in golds:
+            sim = _pairwise_score(pev, gev)
+            if sim >= threshold:
+                scored.append((sim, i, j))
+    scored.sort(reverse=True)
+    used_p, used_g = set(), set()
+    pairs = []
+    for sim, i, j in scored:
+        if i in used_p or j in used_g:
+            continue
+        used_p.add(i); used_g.add(j)
+        pairs.append((i, j, sim))
+    return pairs
+
+def _compute_code_only_counts(pred_codes: List[str], gold_codes: List[str]):
+    from collections import Counter
+    pc = Counter(pred_codes); gc = Counter(gold_codes)
+    tp = sum(min(pc[c], gc[c]) for c in set(pc) | set(gc))
+    fp = len(pred_codes) - tp
+    fn = len(gold_codes) - tp
+    return tp, fp, fn
+
+def _safe_prf(tp: int, fp: int, fn: int):
+    p = tp / (tp + fp) if (tp + fp) else 0.0
+    r = tp / (tp + fn) if (tp + fn) else 0.0
+    f = (2 * p * r / (p + r)) if (p + r) else 0.0
+    return p, r, f
+
+def _evaluate_prioritized_omissions_against_annotations(
+    run_id: Optional[str],
+    classifications: List[FactClassification],
+    transcript_facts: List[HPIFact],
+) -> Dict[str, Any]:
+    """
+    Compare FINAL kept omissions (post semantic filter & scoring),
+    restricted to items with status == 'omitted', against
+    annotations/prioritized_omissions/<run_id>.yaml.
+    """
+    ann_path = _find_prioritized_annotation_file(run_id)
+    if not ann_path:
+        return {"found": False, "reason": "annotation_file_not_found", "run_id": run_id}
+
+    gold_items = _parse_prioritized_yaml(ann_path)
+
+    # Build predictions from classifications (omitted only) -> map to transcript fact
+    by_id = {f.id: f for f in (transcript_facts or [])}
+    preds: List[Dict[str, str]] = []
+    for cls in (classifications or []):
+        if getattr(cls, "status", None) != "omitted":
+            continue
+        tf = by_id.get(cls.fact_id)
+        if not tf:
+            continue
+        code = (tf.code or "").strip()
+        ev = (getattr(getattr(tf, "evidence_span", None), "text", "") or "").strip()
+        if code:
+            preds.append({"id": tf.id, "code": code, "evidence": ev})
+
+    golds = [{"code": (g["code"] or "").strip(), "evidence": (g["evidence"] or "").strip()} for g in gold_items]
+
+    # Group by code
+    from collections import defaultdict
+    by_code_pred, by_code_gold = defaultdict(list), defaultdict(list)
+    for i, pr in enumerate(preds):
+        by_code_pred[pr["code"]].append((i, pr["evidence"]))
+    for j, gd in enumerate(golds):
+        by_code_gold[gd["code"]].append((j, gd["evidence"]))
+
+    matches = []
+    for code in set(by_code_pred) | set(by_code_gold):
+        matches.extend(_greedy_match_by_code(by_code_pred.get(code, []), by_code_gold.get(code, []), _PRIOR_SIM_THRESHOLD))
+
+    tp = len(matches)
+    fp = len(preds) - tp
+    fn = len(golds) - tp
+    precision, recall, f1 = _safe_prf(tp, fp, fn)
+    avg_sim = (sum(sim for _, _, sim in matches) / tp) if tp else 0.0
+
+    # Code-only
+    tp_c, fp_c, fn_c = _compute_code_only_counts([p["code"] for p in preds], [g["code"] for g in golds])
+    p_c, r_c, f_c = _safe_prf(tp_c, fp_c, fn_c)
+
+    sample_matches: List[Dict[str, Any]] = []
+    for (pi, gj, sim) in sorted(matches, key=lambda x: x[2], reverse=True)[:50]:
+        sample_matches.append({
+            "pred_id": preds[pi]["id"],
+            "code": preds[pi]["code"],
+            "pred_evidence": preds[pi]["evidence"],
+            "gold_evidence": golds[gj]["evidence"],
+            "similarity": round(sim, 4),
+        })
+
+    return {
+        "found": True,
+        "run_id": run_id,
+        "annotation_path": str(ann_path),
+        "n_pred": len(preds),
+        "n_gold": len(golds),
+        "strict": {
+            "threshold": _PRIOR_SIM_THRESHOLD,
+            "tp": tp, "fp": fp, "fn": fn,
+            "precision": precision, "recall": recall, "f1": f1,
+            "avg_similarity": avg_sim,
+            "matches_preview": sample_matches,
+        },
+        "code_only": {
+            "tp": tp_c, "fp": fp_c, "fn": fn_c,
+            "precision": p_c, "recall": r_c, "f1": f_c,
+        },
+    }
+
+
 # ---------------- core agent ----------------
 
 def scorer(state: PipelineState) -> PipelineState:
@@ -132,6 +298,7 @@ def scorer(state: PipelineState) -> PipelineState:
       - updates each FactClassification.materiality (int)
       - sets priority_label ("high"/"medium"/"low"/None)
       - populates state.prioritized with items having materiality >= 2 (omitted/conflict)
+      - NEW: adds state.metrics['prioritized_eval'] comparing FINAL omissions vs gold
     """
     if not state.classifications:
         return state
@@ -219,5 +386,16 @@ def scorer(state: PipelineState) -> PipelineState:
 
     state.classifications = updated
     state.prioritized = prioritized
+
+    # 7) NEW: Evaluate FINAL omissions (status == 'omitted') vs gold prioritized_omissions
+    try:
+        prior_eval = _evaluate_prioritized_omissions_against_annotations(
+            state.run_id, state.classifications, state.transcript_facts
+        )
+    except Exception as e:
+        prior_eval = {"found": False, "error": str(e), "run_id": state.run_id}
+
+    state.metrics = state.metrics or {}
+    state.metrics["prioritized_eval"] = prior_eval
 
     return state

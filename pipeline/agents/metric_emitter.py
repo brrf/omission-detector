@@ -18,8 +18,8 @@ def _append_csv_row(path, header, row_dict):
 
 def _flatten_gold_eval(run_id: str, ts: str, ge: dict) -> dict:
     """
-    Flatten state.metrics['gold_eval'] (or note_eval) to a single CSV row for dashboards.
-    The schema is shared by both so we can reuse it.
+    Flatten state.metrics['gold_eval'] (or note_eval/prioritized_eval) to a single CSV row for dashboards.
+    The schema is shared across all three so we can reuse it.
     """
     base = {
         "ts": ts,
@@ -55,7 +55,8 @@ def _flatten_gold_eval(run_id: str, ts: str, ge: dict) -> dict:
 def metric_emitter(state: PipelineState) -> PipelineState:
     """
     Persist prioritized omissions + a compact per-run blob for humans & evals.
-    Also persists gold-overlap metrics and HPI note-overlap metrics if present.
+    Also persists gold-overlap metrics, HPI note-overlap metrics, and
+    NEW: prioritized omissions overlap (strict) if present.
     """
     ts = datetime.utcnow().isoformat()
     run_id = state.run_id or "unknown"
@@ -106,6 +107,7 @@ def metric_emitter(state: PipelineState) -> PipelineState:
     # C) Per-run compact JSON (for quick drilldown in the dashboard)
     gold_eval = (state.metrics or {}).get("gold_eval", None)
     note_eval = (state.metrics or {}).get("note_eval", None)
+    prior_eval = (state.metrics or {}).get("prioritized_eval", None)
     by_run = {
         "run_id": run_id,
         "problems": [{"id": p.id, "name": p.name, "active_today": bool(p.active_today)} for p in (state.problems or [])],
@@ -128,6 +130,7 @@ def metric_emitter(state: PipelineState) -> PipelineState:
         ],
         "gold_eval": gold_eval if gold_eval else None,
         "note_eval": note_eval if note_eval else None,
+        "prioritized_eval": prior_eval if prior_eval else None,
     }
     with open(_OUT_DIR / "by_run" / f"{run_id}.json", "w", encoding="utf-8") as f:
         json.dump(by_run, f, ensure_ascii=False, indent=2)
@@ -163,5 +166,21 @@ def metric_emitter(state: PipelineState) -> PipelineState:
                   "thr","tp","fp","fn","precision","recall","f1","avg_similarity","avg_rougeL_f",
                   "tp_code","fp_code","fn_code","precision_code","recall_code","f1_code"]
         _append_csv_row(ne_csv, header, row)
+
+    # F) Persist Prioritized Omissions overlap (strict) if available
+    if prior_eval and prior_eval.get("found"):
+        # 1) Full blob per run (JSONL)
+        pe_jsonl = _OUT_DIR / "prioritized_eval.jsonl"
+        with open(pe_jsonl, "a", encoding="utf-8") as f:
+            rec = {"ts": ts, "run_id": run_id, **prior_eval}
+            f.write(json.dumps(rec, ensure_ascii=False) + "\n")
+
+        # 2) Compact CSV row (one per run, latest wins)
+        pe_csv = _OUT_DIR / "prioritized_eval.csv"
+        row = _flatten_gold_eval(run_id, ts, prior_eval)  # same schema
+        header = ["ts","run_id","found","annotation_path","n_pred","n_gold",
+                  "thr","tp","fp","fn","precision","recall","f1","avg_similarity","avg_rougeL_f",
+                  "tp_code","fp_code","fn_code","precision_code","recall_code","f1_code"]
+        _append_csv_row(pe_csv, header, row)
 
     return state

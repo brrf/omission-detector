@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>Omission Review – Demo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="stylesheet" href="/demo_app/style.css" />
+</head>
+<body>
+  <header class="app-header">
+    <div class="brand">
+      <div class="dot"></div>
+      <span>Omission Review</span>
+    </div>
+    <div id="metaPaths" class="meta"></div>
+  </header>
+
+  <main class="layout">
+    <aside class="sidebar">
+      <div class="sidebar-head">
+        <h2>Encounters</h2>
+        <input id="searchInput" placeholder="Filter by run_id…" />
+      </div>
+      <ul id="runList" class="run-list"></ul>
+    </aside>
+
+    <section class="content">
+      <div id="emptyState" class="empty">
+        <h2>Select an encounter</h2>
+        <p>Choose a run on the left to review omissions and the original HPI.</p>
+      </div>
+
+      <div id="encounterView" class="encounter hidden">
+        <div class="encounter-head">
+          <h2 id="runTitle"></h2>
+          <div class="actions">
+            <button id="selectAllBtn" class="btn ghost">Select all</button>
+            <button id="deselectAllBtn" class="btn ghost">Deselect all</button>
+          </div>
+        </div>
+
+        <div class="omissions-box">
+          <h3>Omissions</h3>
+          <ul id="omissionList" class="omissions"></ul>
+        </div>
+
+        <div class="note-row">
+          <div class="note-box">
+            <div class="note-head">
+              <h3>Original HPI</h3>
+            </div>
+            <div id="hpiOriginal" class="note-body muted-bg"></div>
+          </div>
+
+          <div class="note-box">
+            <div class="note-head">
+              <h3>Revised HPI</h3>
+              <small class="hint">New or edited sentences are <strong>bold</strong>.</small>
+            </div>
+            <div id="hpiRevised" class="note-body"></div>
+          </div>
+        </div>
+
+        <div class="footer-actions">
+          <button id="generateBtn" class="btn primary">Generate new note</button>
+          <button id="sendBtn" class="btn">Send to clinician</button>
+          <div id="status" class="status"></div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script src="/demo_app/app.js"></script>
+</body>
+</html>

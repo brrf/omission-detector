@@ -1,0 +1,115 @@
+- code: "D1.CC-01"
+  evidence_span: "I've been having postmenopausal bleeding."
+  rationale: "Stated primary problem prompting OB evaluation; fits chief concern text."
+
+- code: "D4.MED-05"
+  evidence_span: "on hormone therapy for about 5 months."
+  rationale: "Current duration on HRT modifies assessment of bleeding; medication context."
+
+- code: "D4.MED-05"
+  evidence_span: "estradiol patch of 0.0375 milligram twice weekly"
+  rationale: "Specific current systemic estrogen dose/schedule influences endometrial stimulation."
+
+- code: "D4.MED-05"
+  evidence_span: "progesterone 200 milligrams nightly"
+  rationale: "Progestogen regimen relevant to endometrial protection while on estrogen."
+
+- code: "D4.MED-05"
+  evidence_span: "the estradiol vaginal cream? Yes."
+  rationale: "Local vaginal estrogen use can contribute to or confuse bleeding source; medication context."
+
+- code: "D4.MED-05"
+  evidence_span: "we did try to have me move down in the estrogen"
+  rationale: "Recent medication adjustment aimed at affecting symptom course."
+
+- code: "D4.TRAJ-01"
+  evidence_span: "However, I'm still having it."
+  rationale: "Symptom persistence following a med change reflects trajectory (no improvement)."
+
+- code: "D4.COMO-04"
+  evidence_span: "I have fibroids."
+  rationale: "Uterine fibroids are a comorbidity that can cause or worsen bleeding."
+
+- code: "D4.COMO-04"
+  evidence_span: "One is 4 centimeters."
+  rationale: "Size of fibroid is clinically relevant to bleeding risk/management."
+
+- code: "D6.DIAG-02"
+  evidence_span: "I had an ultrasound done, I wanted to say it was like maybe October"
+  rationale: "Recent diagnostic imaging pertinent to current problem."
+
+- code: "D6.DIAG-02"
+  evidence_span: "my OB was great and did an ultrasound then, and then a year later she did a follow-up. So that's nice because we have a baseline."
+  rationale: "Prior diagnostics with documented follow-up establish baseline for comparison."
+
+- code: "D6.CONS-04"
+  evidence_span: "as soon as I had any bleeding, she was, you know, you go to the OB."
+  rationale: "PCP provided specialist-directed guidance regarding the bleeding."
+
+- code: "D9.COORD-13"
+  evidence_span: "The primary care has been doing the hormones."
+  rationale: "Identifies external provider managing HRT, relevant to coordination."
+
+- code: "D8.SN-03"
+  evidence_span: "tomorrow I have an appointment with my OB"
+  rationale: "Specific follow-up arranged for evaluation of the acute issue."
+
+- code: "D7.FEAR-02"
+  evidence_span: "I'm just terrified that I'm going to have to go off of estrogen."
+  rationale: "Expresses patient fear regarding potential treatment change."
+
+- code: "D7.PREF-03"
+  evidence_span: "I don't want to have any surgeries."
+  rationale: "States treatment preference/avoidance."
+
+- code: "D9.PREF-12"
+  evidence_span: "I'm trying not to overlap in my care."
+  rationale: "Care-delivery preference to minimize duplicate/fragmented care."
+
+- code: "D7.PREF-03"
+  evidence_span: "my hope is that they might be able to do the testosterone if that's something that ends up being an option later."
+  rationale: "States interest in future therapeutic option (testosterone)."
+
+- code: "D9.COORD-13"
+  evidence_span: "It's Dr. Emily Wong's office in Seattle."
+  rationale: "Names external clinic/clinician involved, aiding care coordination."
+
+- code: "D4.COMO-04"
+  evidence_span: "as somebody who's diabetic"
+  rationale: "Diabetes is a relevant comorbidity influencing overall management and risk."
+
+- code: "D4.MED-05"
+  evidence_span: "I do use insulin, I have an insulin pump."
+  rationale: "Current diabetes treatment modality is a medication/device context relevant to care."
+
+- code: "D4.MED-05"
+  evidence_span: "with the tirzepatide, I can't take any insulin."
+  rationale: "Medication interaction/effect on insulin use impacts management."
+
+- code: "D4.MED-05"
+  evidence_span: "3 milligrams a week."
+  rationale: "Dose of tirzepatide (context from dialogue) is part of current medication regimen."
+
+- code: "D9.SUB-08"
+  evidence_span: "I have not done that for at least 35 years."
+  rationale: "Refers to smoking; documents remote cessation in substance-use history."
+
+- code: "D4.MED-05"
+  evidence_span: "We have to move that to 137."
+  rationale: "Levothyroxine dose set at 137 mcg; endocrine medication context."
+
+- code: "D9.COORD-13"
+  evidence_span: "you are on my list"
+  rationale: "Patient placed on notification list for testosterone availability—coordination detail."
+
+- code: "D9.INS-11"
+  evidence_span: "out of pocket, not through insurance."
+  rationale: "Coverage/dispensing detail affecting how medication was obtained."
+
+- code: "D7.FEAR-02"
+  evidence_span: "I hope I don't die. I'm dead serious."
+  rationale: "Expresses safety concern/anxiety about upcoming insulin management changes."
+
+- code: "D4.MED-05"
+  evidence_span: "I was on 0.05"
+  rationale: "Documents prior estradiol patch dose, relevant to recent medication adjustment."

@@ -1,0 +1,191 @@
+- code: "D1.CC-01"
+  evidence_span: "For the last weekend, I have had swollen legs from the hip down, and I have pains on the inside of my thighs, and I have pain on the inside of my calves down here."
+  rationale: "Patient’s stated reason for visit: new bilateral leg swelling with inner thigh and calf pain."
+
+- code: "D2.ON-01"
+  evidence_span: "Last weekend, yeah. I noticed it last weekend."
+  rationale: "Onset of the current episode was ‘last weekend’ (~1 week ago)."
+
+- code: "D2.LOC-02"
+  evidence_span: "swollen legs from the hip down"
+  rationale: "Anatomic distribution of swelling from hips to feet."
+
+- code: "D2.LOC-02"
+  evidence_span: "Both sides? Yeah, both sides."
+  rationale: "Confirms bilateral involvement."
+
+- code: "D2.LOC-02"
+  evidence_span: "pains on the inside of my thighs"
+  rationale: "Location of pain specified as medial thighs."
+
+- code: "D2.LOC-02"
+  evidence_span: "I have pain on the inside of my calves down here."
+  rationale: "Location of pain specified as medial calves."
+
+- code: "D2.PAT-08"
+  evidence_span: "Those all came together, the swelling and the pain? Yeah."
+  rationale: "Temporal pattern: pain and swelling began concurrently."
+
+- code: "D2.AG-05"
+  evidence_span: "Also more when you walk? That's when I Notice it most."
+  rationale: "Leg pain is provoked by ambulation (activity-aggravated)."
+
+- code: "D2.CHAR-04"
+  evidence_span: "when I'm rubbing it feels kind of like little pins and needles."
+  rationale: "Quality of leg symptoms described as paresthetic (‘pins and needles’)."
+
+- code: "D2.SEV-09"
+  evidence_span: "So you got about 2, what do we call it, 2 plus edema in your legs. 2 plus. 2 plus plus, 2 to 3 plus"
+  rationale: "Clinician-graded edema severity as approximately 2–3+."
+
+- code: "D2.DUR-03"
+  evidence_span: "it's been this way for a week."
+  rationale: "Duration of continuous edema/pain episode ~1 week."
+
+- code: "D3.POS-01"
+  evidence_span: "I'm still short of breath, in fact, I have to breathe real hard while I'm walking any distance."
+  rationale: "Associated exertional dyspnea reported."
+
+- code: "D3.PN-02"
+  evidence_span: "you're not short of breath when you're lying flat in bed? No."
+  rationale: "Pertinent negative for orthopnea."
+
+- code: "D4.TRAJ-01"
+  evidence_span: "But is that worse? the last 10 days? No. Not worse."
+  rationale: "Trajectory of dyspnea unchanged over the last ~10 days."
+
+- code: "D5.ADL-01"
+  evidence_span: "walking is more difficult now."
+  rationale: "Functional impact on mobility/ADL from current symptoms."
+
+- code: "D2.LOC-02"
+  evidence_span: "My back, about halfway up on the left side here"
+  rationale: "Back pain location: left mid-thoracic/lumbar region."
+
+- code: "D2.AG-05"
+  evidence_span: "Oh, yes, yes, it was whenever I would move like this, I could feel it, yes."
+  rationale: "Back pain is movement-provoked (mechanical)."
+
+- code: "D3.CONST-03"
+  evidence_span: "His weight is up Oh yeah."
+  rationale: "Constitutional change: recent weight gain acknowledged."
+
+- code: "D4.BASE-02"
+  evidence_span: "It's running basically 160 to 180 over 70."
+  rationale: "Baseline home BP is markedly elevated (≈160–180/70 mmHg)."
+
+- code: "D4.BASE-02"
+  evidence_span: "Heart rate is about 50"
+  rationale: "Baseline bradycardia (~50 bpm) noted."
+
+- code: "D4.TRAJ-01"
+  evidence_span: "it was in the 40s before, so it's a little better"
+  rationale: "Heart rate has improved from prior 40s to ~50 bpm."
+
+- code: "D4.COMO-04"
+  evidence_span: "initial consult for the chronic kidney disease/elevated creatinine."
+  rationale: "Relevant comorbidity: CKD with elevated creatinine."
+
+- code: "D6.DIAG-02"
+  evidence_span: "ultrasound of your kidneys was normal"
+  rationale: "Prior diagnostic imaging (renal ultrasound) normal."
+
+- code: "D6.CONS-04"
+  evidence_span: "to stop lisinopril after he had talked to a nephrologist."
+  rationale: "Specialist-informed recommendation from ER/nephrology to discontinue lisinopril."
+
+- code: "D6.DIAG-02"
+  evidence_span: "And that was because your potassium was high. Yeah."
+  rationale: "Prior lab finding: hyperkalemia prompted medication change."
+
+- code: "D4.MED-05"
+  evidence_span: "So you're not taking the lisinopril still, right? No."
+  rationale: "Current medication change due to lab effect (ACE inhibitor stopped after hyperkalemia)."
+
+- code: "D4.MED-05"
+  evidence_span: "I tried 2 times, but immediately I have. Diarrhea. Severe diarrhea."
+  rationale: "Medication intolerance: carvedilol triggers severe diarrhea."
+
+- code: "D4.MED-05"
+  evidence_span: "for a while now you have not been taking carvedilol, you have not been taking metoprolol. Right."
+  rationale: "Beta-blockers (carvedilol, metoprolol) held—relevant to HR/BP and symptoms."
+
+- code: "D4.MED-05"
+  evidence_span: "Yes, I still am."
+  rationale: "Continued use of diltiazem (rate-slowing agent) can influence bradycardia/edema evaluation."
+
+- code: "D4.MED-05"
+  evidence_span: "Are you taking amlodipine? Yes."
+  rationale: "Amlodipine ongoing; dihydropyridine CCB can contribute to peripheral edema."
+
+- code: "D4.MED-05"
+  evidence_span: "You're on the Eliquis, apixaban. Yes."
+  rationale: "Anticoagulation in place, reducing (but not eliminating) DVT risk amid leg swelling."
+
+- code: "D6.DIAG-02"
+  evidence_span: "last time you did the heart test, the blood test for heart failure, it was normal."
+  rationale: "Prior BNP/NT-proBNP reportedly normal—helps contextualize edema workup."
+
+- code: "D6.DIAG-02"
+  evidence_span: "the kidneys are, let's just say, stable, and your potassium is normal."
+  rationale: "Most recent labs show stable renal function and normokalemia."
+
+- code: "D6.CONS-04"
+  evidence_span: "Well, you advised me to go to the emergency room... About 3, 4 weeks ago, yeah."
+  rationale: "Recent ED evaluation occurred 3–4 weeks earlier."
+
+- code: "D6.DIAG-02"
+  evidence_span: "you had a bone marrow biopsy with Dr. Fernandez, and there was a small monoclonal plasma cell population"
+  rationale: "Prior diagnostic procedure (BMBx) with result relevant to anemia workup."
+
+- code: "D4.COMO-04"
+  evidence_span: "you might have what they call an early dysplastic syndrome"
+  rationale: "Possible early myelodysplastic syndrome noted as comorbidity impacting anemia."
+
+- code: "D4.COMO-04"
+  evidence_span: "This may be the explanation of your so-called MGUS."
+  rationale: "MGUS documented as part of hematologic history."
+
+- code: "D6.PROC-03"
+  evidence_span: "your stent removed a while back. Yes. From the, because of the, what they call the choledocholithiasis"
+  rationale: "Prior ERCP-related stent removal for choledocholithiasis."
+
+- code: "D6.PROC-03"
+  evidence_span: "I have the loop recorder."
+  rationale: "Implanted loop recorder in place (cardiac monitoring device)."
+
+- code: "D9.COORD-13"
+  evidence_span: "August 8th? August 8th, okay."
+  rationale: "Upcoming nephrology appointment scheduled (care coordination)."
+
+- code: "D9.COORD-13"
+  evidence_span: "you're seeing Dr. Kim, cardiology, in about 6 days."
+  rationale: "Upcoming cardiology follow-up identified."
+
+- code: "D8.SN-03"
+  evidence_span: "I think you did, every 2 weeks I was going to go."
+  rationale: "Standing plan for q2-week labs to monitor kidneys/potassium."
+
+- code: "D8.SN-03"
+  evidence_span: "she's going to give you a couple lab tests to do."
+  rationale: "Immediate follow-up plan to obtain additional labs for edema assessment."
+
+- code: "D3.POS-01"
+  evidence_span: "I still have the incontinence problems with urinary and fecal."
+  rationale: "Associated GU symptom: urinary incontinence persists."
+
+- code: "D3.POS-01"
+  evidence_span: "I still have the incontinence problems with urinary and fecal."
+  rationale: "Associated GI symptom: fecal incontinence persists."
+
+- code: "D2.AL-06"
+  evidence_span: "with a couple of visits to physical therapy, things have improved"
+  rationale: "Alleviating factor: incontinence improved with pelvic-floor/physical therapy."
+
+- code: "D9.SUB-08"
+  evidence_span: "1 or 2 per week, yes."
+  rationale: "Alcohol use baseline: light intake (1–2 drinks/week)."
+
+- code: "D9.LANG-14"
+  evidence_span: "I still do ask her to repeat quite often"
+  rationale: "Possible hearing/communication barrier noted by spouse prompting repeats."

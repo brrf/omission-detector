@@ -1,0 +1,159 @@
+- code: "D1.CC-01"
+  evidence_span: "I want to talk about this cold."
+  rationale: "Patient explicitly states the primary concern for today in their own words."
+
+- code: "D1.CC-02"
+  evidence_span: "we got your pre-op, we got your wellness exam"
+  rationale: "Concise non-symptom reason-for-visit phrasing (pre-op and wellness) captured by clinician."
+
+- code: "D2.ON-01"
+  evidence_span: "I have been sick for today is 11 days."
+  rationale: "Explicit onset/elapsed time for current illness."
+
+- code: "D2.LOC-02"
+  evidence_span: "It's like all on my head and my neck now."
+  rationale: "Anatomic localization of current symptoms."
+
+- code: "D2.PAT-08"
+  evidence_span: "now it's a constant tickle and drip."
+  rationale: "Describes timing/pattern as constant."
+
+- code: "D2.CHAR-04"
+  evidence_span: "a constant tickle and drip."
+  rationale: "Qualitative description of symptom character (tickle/drip)."
+
+- code: "D3.POS-01"
+  evidence_span: "Last night I wet my pants coughing."
+  rationale: "Cough is an associated positive symptom; sentence confirms presence."
+
+- code: "D3.POS-01"
+  evidence_span: "The worst part of this whole thing is my runny nose."
+  rationale: "Reports rhinorrhea as a co-occurring symptom."
+
+- code: "D3.POS-01"
+  evidence_span: "at night, I'm getting a tickle and all that stuff that's running down."
+  rationale: "Describes post-nasal drainage as an associated positive."
+
+- code: "D3.CONST-03"
+  evidence_span: "No fevers, no shortness of breath? No."
+  rationale: "Denies fever, a constitutional symptom."
+
+- code: "D3.PN-02"
+  evidence_span: "No fevers, no shortness of breath? No."
+  rationale: "Denies shortness of breath, a pertinent negative that narrows differential."
+
+- code: "D3.PN-02"
+  evidence_span: "no chest pain, chest pressure, racing heart, breathing trouble. Nope."
+  rationale: "Denies cardiopulmonary red-flag symptoms (chest pain/pressure, palpitations)."
+
+- code: "D3.PN-02"
+  evidence_span: "Tummy's been okay, no black stools, blood, major pain. No."
+  rationale: "Denies GI bleeding or significant abdominal pain."
+
+- code: "D3.PN-02"
+  evidence_span: "Any urine changes? ... No."
+  rationale: "Denies urinary changes."
+
+- code: "D3.PN-02"
+  evidence_span: "No funny rashes? Nope."
+  rationale: "Denies new rashes."
+
+- code: "D4.TRAJ-01"
+  evidence_span: "the swelling in my legs has really stopped."
+  rationale: "Reports improvement/resolution in prior leg swelling (trajectory better)."
+
+- code: "D4.EXPO-03"
+  evidence_span: "But he's the one that got this and gave it to me."
+  rationale: "Identifies infectious contact exposure precipitating current illness."
+
+- code: "D6.SELF-01"
+  evidence_span: "I have been taking Sudafed, sinus, and allergy."
+  rationale: "OTC self-care attempted for symptom relief."
+
+- code: "D5.SLEEP-03"
+  evidence_span: "at night, I'm getting a tickle and all that stuff that's running down."
+  rationale: "Night symptoms suggest sleep disturbance from post-nasal drip."
+
+- code: "D9.SUB-08"
+  evidence_span: "the last few days I haven't been smoking at all."
+  rationale: "Recent change in tobacco use relevant to assessment."
+
+- code: "D9.SUB-08"
+  evidence_span: "but before that probably 5 to 10."
+  rationale: "Baseline daily cigarette consumption documented."
+
+- code: "D7.GOAL-01"
+  evidence_span: "Every day, every day. And yes, I do want to stop."
+  rationale: "States goal/desire to quit smoking."
+
+- code: "D4.MED-05"
+  evidence_span: "I have to be off of it for 2 weeks before the surgery."
+  rationale: "Peri-operative instruction regarding GLP-1 (semaglutide/Wegovy) that affects symptoms/anesthesia risk."
+
+- code: "D4.MED-05"
+  evidence_span: "you're on the highest possible dose."
+  rationale: "Current medication intensity (Wegovy) influences disease control and peri-op planning."
+
+- code: "D4.BASE-02"
+  evidence_span: "Your A1c is down to 6.2, I think. 6.2 from a peak of 7.0."
+  rationale: "Objective baseline control for diabetes."
+
+- code: "D4.COMO-04"
+  evidence_span: "because you do have diabetes. technically."
+  rationale: "Comorbidity that impacts risk and management."
+
+- code: "D4.COMO-04"
+  evidence_span: "Your osteopenia, which is your thinning bones."
+  rationale: "Comorbidity relevant to fracture/surgical considerations."
+
+- code: "D4.COMO-04"
+  evidence_span: "you still have the kind of neuropathy in your feet, you get that numbness and tingling in your feet."
+  rationale: "Peripheral neuropathy is a comorbidity affecting function and risk."
+
+- code: "D2.AL-06"
+  evidence_span: "I also get massages, and when I get massages and pedicures and they massage the bottoms of my legs and my feet, I find that it helps"
+  rationale: "Reports measures that alleviate neuropathic symptoms."
+
+- code: "D6.PROC-03"
+  evidence_span: "It was 2014."
+  rationale: "Prior hip surgery/procedure relevant to current surgical planning."
+
+- code: "D9.LANG-14"
+  evidence_span: "I know I've lost a little bit of hearing in my right ear."
+  rationale: "Hearing impairment may affect communication during care."
+
+- code: "D9.OCC-06"
+  evidence_span: "So you have the one client you work for."
+  rationale: "Work context noted; ongoing client relationship."
+
+- code: "D9.ACT-07"
+  evidence_span: "I still do my dog sitting jog every day for 2 hours a day."
+  rationale: "Regular daily activity pattern that influences baseline wellbeing."
+
+- code: "D5.QOL-04"
+  evidence_span: "I don't feel limited in any sort of way."
+  rationale: "Patient reports preserved function/quality of life despite conditions."
+
+- code: "D9.LEG-17"
+  evidence_span: "it's going to be my girlfriend"
+  rationale: "Identifies intended medical power of attorney/agent (legal/guardianship element)."
+
+- code: "D9.COORD-13"
+  evidence_span: "it's Johnson, yeah"
+  rationale: "Names external surgeon involved in upcoming care (coordination need)."
+
+- code: "D6.DIAG-02"
+  evidence_span: "Liver tests were normal."
+  rationale: "Mentions prior lab results pertinent to comorbidity (fatty liver) and current status."
+
+- code: "D4.MED-05"
+  evidence_span: "You're taking your blood pressure med and your cholesterol med? Yep. Every day."
+  rationale: "Chronic medications that influence cardiovascular risk and peri-op planning."
+
+- code: "D6.CONS-04"
+  evidence_span: "And then I saw Dr. Patel after."
+  rationale: "Specialist input (ophthalmology) documented."
+
+- code: "D6.CONS-04"
+  evidence_span: "When I saw Dr. Green for my Pap smear"
+  rationale: "External clinician involvement relevant to overall care coordination."

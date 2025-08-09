@@ -1,0 +1,91 @@
+- code: "D2.LOC-02"
+  evidence_span: "it's my right knee"
+  rationale: "Identifies the anatomic site of the primary complaint as the right knee, which maps to Location."
+
+- code: "D2.ON-01"
+  evidence_span: "No, it's October 12th."
+  rationale: "Provides a specific onset date for the current knee episode, which maps to Onset (timestamp)."
+
+- code: "D2.CHAR-04"
+  evidence_span: "That's fluid buildup."
+  rationale: "Describes the quality of the knee problem as swelling/effusion, which maps to Character/quality."
+
+- code: "D2.AG-05"
+  evidence_span: "depending on how long I stand up"
+  rationale: "Standing longer worsens symptoms, which maps to Aggravating factors."
+
+- code: "D4.TRAJ-01"
+  evidence_span: "it's actually taken a turn for the worse."
+  rationale: "States the course is worsening, which maps to Symptom trajectory."
+
+- code: "D5.ADL-01"
+  evidence_span: "And I can't put it on the ground."
+  rationale: "Indicates difficulty with weight-bearing/ambulation, which maps to ADL limitation."
+
+- code: "D6.DIAG-02"
+  evidence_span: "this is a 07/29/24, so in like July?"
+  rationale: "Documents that prior knee imaging (x-ray) was performed and when, which maps to Prior diagnostics."
+
+- code: "D6.DIAG-02"
+  evidence_span: "So it's mild right suprapatellar joint effusion."
+  rationale: "States the imaging result (suprapatellar effusion), which maps to Prior diagnostics."
+
+- code: "D2.LOC-02"
+  evidence_span: "it just kind of swells up in the back sometimes"
+  rationale: "Describes symptom distribution to the posterior knee, which maps to Location."
+
+- code: "D6.SELF-01"
+  evidence_span: "Should I just continue to ice it when it's really fluid?"
+  rationale: "Indicates home icing has been used/considered for symptom relief, which maps to Self-care attempted."
+
+- code: "D3.POS-01"
+  evidence_span: "it's painful now"
+  rationale: "Confirms pain associated with the knee issue, which maps to Associated positives."
+
+- code: "D2.ON-01"
+  evidence_span: "Monday night, I got this weird thing where when my eyes were open, I had the spins."
+  rationale: "Provides timing for onset of vertigo symptoms, which maps to Onset (timestamp)."
+
+- code: "D2.CHAR-04"
+  evidence_span: "the room does spin."
+  rationale: "Defines the quality of the symptom as true vertigo (room spinning), which maps to Character/quality."
+
+- code: "D2.AG-05"
+  evidence_span: "Lying down, standing up, anything, yeah."
+  rationale: "Positional changes provoke symptoms, which maps to Aggravating factors."
+
+- code: "D3.POS-01"
+  evidence_span: "and nausea."
+  rationale: "Notes an associated symptom (nausea), which maps to Associated positives."
+
+- code: "D2.DUR-03"
+  evidence_span: "it was like 24 hours of horrible."
+  rationale: "Gives the duration of the vertigo episode, which maps to Duration (per episode)."
+
+- code: "D5.ADL-01"
+  evidence_span: "I couldn't barely walk."
+  rationale: "Shows functional limitation in ambulation due to vertigo, which maps to ADL limitation."
+
+- code: "D1.ONCTX-03"
+  evidence_span: "We went on a weekend trip to Yosemite, and it was a long weekend, and I was extremely tired."
+  rationale: "Provides immediate precipitating context preceding vertigo (travel/fatigue), which maps to Precipitating context."
+
+- code: "D7.FEAR-02"
+  evidence_span: "I was thinking I had a brain tumor or something."
+  rationale: "Expresses a specific fear about the cause, which maps to Patient fear/concern."
+
+- code: "D9.SUB-08"
+  evidence_span: "I wasn't drinking or anything"
+  rationale: "Clarifies no alcohol use at the time of symptoms, which maps to Substance use baseline."
+
+- code: "D4.COMO-04"
+  evidence_span: "But I used to get migraines."
+  rationale: "Notes a relevant comorbidity that could influence evaluation of dizziness, which maps to Relevant comorbidities."
+
+- code: "D2.NUM-10"
+  evidence_span: "I've had it once before"
+  rationale: "Quantifies prior similar episodes (one), which maps to Quantifier/count."
+
+- code: "D4.TRAJ-01"
+  evidence_span: "I've got the residue"
+  rationale: "Indicates partial improvement with residual symptoms, which maps to Symptom trajectory."

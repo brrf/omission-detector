@@ -1,0 +1,107 @@
+- code: "D2.ON-01"
+  evidence_span: "Probably like yesterday afternoon."
+  rationale: "Explicit onset timestamp provided for when illness began."
+
+- code: "D1.CC-01"
+  evidence_span: "she was kind of wheezing then"
+  rationale: "Parent states wheezing as a main reason for the visit—chief concern text."
+
+- code: "D1.CC-01"
+  evidence_span: "coughing a bunch"
+  rationale: "Parent states cough as a main reason for the visit—chief concern text."
+
+- code: "D2.CHAR-04"
+  evidence_span: "Kind of the high-pitched whistle."
+  rationale: "Describes the quality of the breathing sound (wheeze) as high-pitched."
+
+- code: "D2.LOC-02"
+  evidence_span: "loose chest congestion"
+  rationale: "Specifies an anatomic location (chest) of congestion."
+
+- code: "D2.PAT-08"
+  evidence_span: "She coughed a lot last night"
+  rationale: "Indicates nocturnal timing/pattern of symptoms."
+
+- code: "D3.POS-01"
+  evidence_span: "And runny nose."
+  rationale: "Associated positive symptom accompanying the illness."
+
+- code: "D3.POS-01"
+  evidence_span: "Her eyes are still kind of watery."
+  rationale: "Associated positive (ocular tearing/watery eyes)."
+
+- code: "D3.CONST-03"
+  evidence_span: "this morning, just pretty lethargic and everything."
+  rationale: "Constitutional symptom (lethargy/fatigue) noted."
+
+- code: "D3.CONST-03"
+  evidence_span: "I took her temperature whenever she got up and was 98.6."
+  rationale: "Constitutional negative for fever (afebrile measurement)."
+
+- code: "D3.PN-02"
+  evidence_span: "And no vomiting or diarrhea."
+  rationale: "Pertinent negative—denies vomiting."
+
+- code: "D3.PN-02"
+  evidence_span: "And no vomiting or diarrhea."
+  rationale: "Pertinent negative—denies diarrhea."
+
+- code: "D4.BASE-02"
+  evidence_span: "And then she ate like normal"
+  rationale: "Baseline/functional intake preserved (normal appetite)."
+
+- code: "D4.BASE-02"
+  evidence_span: "And is she drinking her bottles like normal? Yeah. Yeah."
+  rationale: "Baseline hydration/feeding preserved (normal bottle intake)."
+
+- code: "D5.SLEEP-03"
+  evidence_span: "did take like a two and a half hour nap this morning, which is unusual."
+  rationale: "Sleep pattern change due to illness (increased daytime sleep)."
+
+- code: "D3.PN-02"
+  evidence_span: "she's got no signs of respiratory distress or like difficulty breathing"
+  rationale: "Pertinent negative for dyspnea/respiratory distress."
+
+- code: "D3.POS-01"
+  evidence_span: "She's definitely lost her voice."
+  rationale: "Associated positive—hoarseness/aphonia."
+
+- code: "D4.EXPO-03"
+  evidence_span: "I picked her up from daycare"
+  rationale: "Exposure context—daycare attendance increases viral exposure risk."
+
+- code: "D4.EXPO-03"
+  evidence_span: "there was one case in the classroom over Christmas break, but we weren't there."
+  rationale: "Exposure history discussed; no direct recent contact with that RSV case."
+
+- code: "D4.IMMU-07"
+  evidence_span: "Did she get the RSV shot? Yes. Yeah, she did."
+  rationale: "Immune status modifier—received RSV prophylaxis."
+
+- code: "D4.IMMU-07"
+  evidence_span: "And the flu. Yeah."
+  rationale: "Immune status modifier—received influenza vaccine."
+
+- code: "D4.TRAJ-01"
+  evidence_span: "But then this morning, woke up really congested and like the same kind of loose chest congestion, but also had the wheeziness."
+  rationale: "Trajectory showing worsening symptoms by morning."
+
+- code: "D3.SYS-04"
+  evidence_span: "She's been having a little bit of diaper rash"
+  rationale: "Other system ROS positive outside primary respiratory complaint."
+
+- code: "D6.SELF-01"
+  evidence_span: "we've just been putting Desitin on her."
+  rationale: "Self-care attempted (topical treatment) for diaper rash."
+
+- code: "D8.RF-01"
+  evidence_span: "flaring of your nostrils when you breathe, breathing fast, sucking in between your ribs, using your stomach muscles and your neck muscles to breathe."
+  rationale: "Red-flag signs for respiratory distress explicitly discussed."
+
+- code: "D8.RP-02"
+  evidence_span: "I would only go if she's like not able to eat or she's got clearly like difficulty breathing."
+  rationale: "Return precautions specifying when to seek higher care."
+
+- code: "D8.SN-03"
+  evidence_span: "And then, just come back in, back the next day, or."
+  rationale: "Safety-net/follow-up plan communicated."

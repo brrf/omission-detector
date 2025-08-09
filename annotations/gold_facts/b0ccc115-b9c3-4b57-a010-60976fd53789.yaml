@@ -1,0 +1,67 @@
+- code: "D1.CC-01"
+  evidence_span: "Oh, I came because, I don't know, my blood pressure went up."
+  rationale: "Patient-stated reason for ED visit; captures the chief concern in the patient’s words."
+
+- code: "D2.ON-01"
+  evidence_span: "at midnight my blood pressure went up"
+  rationale: "Provides a specific onset time for the presenting issue."
+
+- code: "D2.CHAR-04"
+  evidence_span: "it was like my chest was agitated"
+  rationale: "Describes the quality/character of the chest symptom."
+
+- code: "D2.LOC-02"
+  evidence_span: "my chest"
+  rationale: "Identifies anatomic location of the symptom."
+
+- code: "D3.PN-02"
+  evidence_span: "it said in the triage note that you were having some pain in your chest? No"
+  rationale: "Explicit denial of chest pain is a pertinent negative that narrows the differential."
+
+- code: "D5.SLEEP-03"
+  evidence_span: "at midnight my blood pressure went up and I couldn't sleep"
+  rationale: "Reports sleep disturbance temporally linked to the episode."
+
+- code: "D4.TRAJ-01"
+  evidence_span: "Have you felt pretty good over the last couple hours here? Yes."
+  rationale: "Indicates improvement in symptoms over time during the ED stay."
+
+- code: "D9.SUB-08"
+  evidence_span: "Just beer."
+  rationale: "Establishes baseline alcohol use; relevant substance history."
+
+- code: "D9.LANG-14"
+  evidence_span: "History obtained from patient using Spanish interpreter."
+  rationale: "Documents language/communication need impacting care delivery."
+
+- code: "D8.RP-02"
+  evidence_span: "keep an eye on your symptoms, if things worsen and you can't get a follow-up, you can come back"
+  rationale: "Clear return precautions were provided."
+
+- code: "D8.SN-03"
+  evidence_span: "I'll give you a referral to a doctor in a clinic."
+  rationale: "A follow-up plan/safety-net arrangement was made."
+
+- code: "D9.EDU-15"
+  evidence_span: "check your blood pressure in the morning and in the evening and just write it down"
+  rationale: "Specific self-management/health-education instruction for home BP monitoring."
+
+- code: "D6.DIAG-02"
+  evidence_span: "chest x-ray, lungs clear"
+  rationale: "Diagnostic imaging result from this visit is known and pertinent."
+
+- code: "D6.DIAG-02"
+  evidence_span: "no significant cardiomegaly or signs of pulmonary edema"
+  rationale: "Additional chest X-ray interpretation relevant to current concern."
+
+- code: "D6.DIAG-02"
+  evidence_span: "EKG, sinus tachycardia 103"
+  rationale: "Electrocardiogram finding documented during this encounter."
+
+- code: "D6.DIAG-02"
+  evidence_span: "T-wave inversion of lead 3"
+  rationale: "Specific EKG abnormality reported with results known."
+
+- code: "D6.DIAG-02"
+  evidence_span: "It doesn't look like you have an infection"
+  rationale: "Lab/imaging synthesis conveyed to patient indicating no infection identified today."

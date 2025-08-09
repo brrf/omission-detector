@@ -1,0 +1,187 @@
+- code: "D1.CC-01"
+  evidence_span: "Pain, pain, pain."
+  rationale: "Verbatim chief concern indicating the primary reason for today’s visit is pain."
+
+- code: "D1.ONCTX-03"
+  evidence_span: "the fall didn't help."
+  rationale: "Recent fall is a precipitating context that worsened the current pain episode."
+
+- code: "D2.ON-01"
+  evidence_span: "2 days. 2 days ago."
+  rationale: "Explicit onset timing of the fall related to current symptoms."
+
+- code: "D2.LOC-02"
+  evidence_span: "Kind of in your right butt."
+  rationale: "Anatomic location of the painful area (right posterior hip/buttock)."
+
+- code: "D5.ADL-01"
+  evidence_span: "I can't use my foot, I can't put weight on it"
+  rationale: "Functional limitation—difficulty bearing weight affects mobility/ADLs."
+
+- code: "D4.TRAJ-01"
+  evidence_span: "it's better than it was, it still hurts."
+  rationale: "Describes improving but persistent symptom trajectory."
+
+- code: "D2.AG-05"
+  evidence_span: "So if you look up, you get dizzy? Yeah."
+  rationale: "Looking up provokes dizziness—an aggravating factor."
+
+- code: "D4.BASE-02"
+  evidence_span: "I've always been that way."
+  rationale: "Longstanding baseline tendency to get dizzy with certain head positions."
+
+- code: "D2.AL-06"
+  evidence_span: "If I hang on, it can do it."
+  rationale: "Holding on mitigates dizziness—an alleviating action."
+
+- code: "D3.POS-01"
+  evidence_span: "You have nausea. Yeah."
+  rationale: "Associated positive symptom accompanying GI complaints."
+
+- code: "D2.PAT-08"
+  evidence_span: "Is that every day? The nausea? Just about."
+  rationale: "Near-daily frequency characterizes timing/pattern of nausea."
+
+- code: "D2.LOC-02"
+  evidence_span: "I've been having real bad burning in my throat."
+  rationale: "Anatomic location of burning symptom identified as throat."
+
+- code: "D2.AG-05"
+  evidence_span: "When you swallow, you feel what? Burning."
+  rationale: "Swallowing provokes burning—aggravating factor."
+
+- code: "D2.AG-05"
+  evidence_span: "It burns when you eat? Yeah,"
+  rationale: "Eating worsens symptoms—aggravating factor."
+
+- code: "D3.POS-01"
+  evidence_span: "And then my stomach starts hurting."
+  rationale: "Additional associated GI symptom following swallowing/eating."
+
+- code: "D3.PN-02"
+  evidence_span: "Do you feel like also you have heartburn or you just have the burning in the throat? Just the burning in the throat."
+  rationale: "Pertinent negative for heartburn, narrows differential."
+
+- code: "D4.MED-05"
+  evidence_span: "I take the pill, I don't do nothing."
+  rationale: "Pantoprazole (acid-suppressing med) not relieving symptoms—medication effect on presentation."
+
+- code: "D3.PN-02"
+  evidence_span: "Are you taking, you're not taking anything like Motrin, Aleve, anything like that? No."
+  rationale: "Denies NSAID use—pertinent negative for ulcer risk."
+
+- code: "D3.PN-02"
+  evidence_span: "Are you having any black stools? No."
+  rationale: "Denies melena—pertinent negative for upper GI bleeding."
+
+- code: "D4.MED-05"
+  evidence_span: "Sometimes just 3. 3 or 4."
+  rationale: "Percocet use at 3–4 doses/day—medication influencing symptoms/assessment."
+
+- code: "D4.MED-05"
+  evidence_span: "I think you're taking gabapentin still. Yes."
+  rationale: "Gabapentin is part of current regimen and may affect symptom profile."
+
+- code: "D4.MED-05"
+  evidence_span: "How often do you use the albuterol? 34 times a day."
+  rationale: "Frequent short-acting bronchodilator use suggests uncontrolled respiratory symptoms."
+
+- code: "D2.AL-06"
+  evidence_span: "And when you use the albuterol, you think it helps you. Yeah, it's okay."
+  rationale: "Medication provides partial relief—alleviating factor."
+
+- code: "D9.INS-11"
+  evidence_span: "Real expensive. They won't pay for it."
+  rationale: "Insurance/pharmacy coverage barrier to obtaining the prescribed inhaler."
+
+- code: "D9.SDOH-09"
+  evidence_span: "I can't afford it."
+  rationale: "Financial/resource strain preventing access to needed medication."
+
+- code: "D3.PN-02"
+  evidence_span: "You haven't been sick with COVID recently, right? No."
+  rationale: "Pertinent negative for recent COVID infection."
+
+- code: "D7.PREF-03"
+  evidence_span: "You want to do both? Yeah."
+  rationale: "Patient agrees to receive both flu and COVID vaccines—treatment preference."
+
+- code: "D4.TRAJ-01"
+  evidence_span: "It's been really bad this last week."
+  rationale: "Restless legs symptoms have worsened over the past week—trajectory."
+
+- code: "D6.PROC-03"
+  evidence_span: "It's been a while. ... I haven't had any in a long time."
+  rationale: "Previously received epidural injections for back pain; none recently."
+
+- code: "D9.TRAN-10"
+  evidence_span: "Took 2 and a half hours to get ready to come here."
+  rationale: "Mobility/time burden limits access to in-person care (transport/access barrier)."
+
+- code: "D2.ON-01"
+  evidence_span: "It's been there since February."
+  rationale: "Onset of draining jaw lesion given as February."
+
+- code: "D3.POS-01"
+  evidence_span: "this stupid thing, it won't quit draining."
+  rationale: "Persistent drainage is an associated positive symptom of the jaw lesion."
+
+- code: "D3.POS-01"
+  evidence_span: "Puss. Like thick yellow? Yeah."
+  rationale: "Character/quality of drainage consistent with purulence."
+
+- code: "D3.PN-02"
+  evidence_span: "Does it seem to be getting bigger? No."
+  rationale: "Denies increase in size—pertinent negative for progression."
+
+- code: "D3.PN-02"
+  evidence_span: "How about in the bone? No. ... No, just in the skin."
+  rationale: "Denies bony tenderness; pain localized to skin—pertinent negative for osteitis."
+
+- code: "D6.DIAG-02"
+  evidence_span: "You were in the hospital for about a week almost. ... They thought it was just an abscess"
+  rationale: "Prior diagnostic assessment and hospitalization related to the jaw lesion."
+
+- code: "D6.PROC-03"
+  evidence_span: "They drained it a little bit."
+  rationale: "Prior procedure performed on the lesion (incision/drainage)."
+
+- code: "D9.COORD-13"
+  evidence_span: "So you never saw the person they told you to go see? No. I didn't know I was supposed to."
+  rationale: "Missed follow-up with referred oral/maxillofacial surgeon—coordination issue."
+
+- code: "D9.COORD-13"
+  evidence_span: "They gave me absolutely nothing when I left the hospital. No papers, no nothing."
+  rationale: "Poor discharge communication impacting coordination of care."
+
+- code: "D4.COMO-04"
+  evidence_span: "you're still taking the Fosamax for the osteoporosis?"
+  rationale: "Osteoporosis is a relevant comorbidity affecting risk and management."
+
+- code: "D4.MED-05"
+  evidence_span: "Once a week, right?"
+  rationale: "Weekly alendronate dosing—medication relevant to current concerns."
+
+- code: "D4.MED-05"
+  evidence_span: "they weren't sure what was going on here and if it could have anything to do with the Fosamax."
+  rationale: "Potential medication-related contribution (bisphosphonate) to jaw pathology."
+
+- code: "D4.COMO-04"
+  evidence_span: "Well, she did have compression fractures in her spine, you know that."
+  rationale: "Compression fractures are a relevant comorbidity influencing assessment."
+
+- code: "D6.DIAG-02"
+  evidence_span: "you have this aneurysm in your aorta ... they looked at that and it's not getting any bigger."
+  rationale: "Prior diagnostic result for aortic aneurysm provides risk context."
+
+- code: "D9.TECH-18"
+  evidence_span: "Do you guys ever do video visits? Yeah."
+  rationale: "Confirms access to and ability to use telehealth technology."
+
+- code: "D8.RP-02"
+  evidence_span: "if you still can't walk and you can't make it to the x-ray ... it's probably worth going to the ER"
+  rationale: "Explicit return precaution for worsening/non-improving mobility."
+
+- code: "D8.SN-03"
+  evidence_span: "I think what I'd like to do is... have for, just do a quick check-in video"
+  rationale: "Safety-net plan for near-term follow-up via video visit."

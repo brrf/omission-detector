@@ -1,0 +1,79 @@
+- code: "D1.CC-01"
+  evidence_span: "69-year-old woman here for a new patient evaluation of microhematuria."
+  rationale: "States the primary reason for today's visit in plain language, which is the chief concern."
+
+- code: "D6.DIAG-02"
+  evidence_span: "Her urinalysis today shows moderate blood"
+  rationale: "Reports a diagnostic test and its result obtained today (UA positive for blood)."
+
+- code: "D2.SEV-09"
+  evidence_span: "moderate blood"
+  rationale: "Qualifies the intensity/severity of the hematuria reported on UA."
+
+- code: "D6.DIAG-02"
+  evidence_span: "with no evidence of bacterial growth."
+  rationale: "Documents a diagnostic finding (no bacterial growth) pertinent to ruling out infection."
+
+- code: "D3.PN-02"
+  evidence_span: "Okay, so visible blood in the urine. No. No. No. In the lab. In the lab only. Only lab."
+  rationale: "Denies gross hematuria; blood has only been detected microscopically."
+
+- code: "D3.PN-02"
+  evidence_span: "she's not seen any clots or any other material coming out of the bladder."
+  rationale: "Pertinent negative (no clots/material) that narrows differential for gross hematuria."
+
+- code: "D2.ON-01"
+  evidence_span: "This has been happening actually the first time when she was in Iran."
+  rationale: "Gives when/where the issue was first identified (onset context)."
+
+- code: "D2.NUM-10"
+  evidence_span: "2 times in the lab."
+  rationale: "Quantifies the number of prior positive lab detections."
+
+- code: "D3.POS-01"
+  evidence_span: "there's some pelvic pain and pressure"
+  rationale: "An associated symptom reported alongside the hematuria workup."
+
+- code: "D3.POS-01"
+  evidence_span: "whenever I stand too much, it feels like something wants to come out of my."
+  rationale: "Associated symptom consistent with sensation of vaginal bulge/prolapse."
+
+- code: "D2.AG-05"
+  evidence_span: "whenever I stand too much"
+  rationale: "Identifies an aggravating factor that worsens pelvic pressure/bulge sensation."
+
+- code: "D3.POS-01"
+  evidence_span: "Is she bothered by her urination? [Foreign] Sometimes."
+  rationale: "Admits intermittent urinary bother—an associated urinary symptom."
+
+- code: "D6.PROC-03"
+  evidence_span: "12 years ago? Uh-huh, yes."
+  rationale: "Confirms prior surgical procedure (hysterectomy) and its timing."
+
+- code: "D6.DIAG-02"
+  evidence_span: "there was no suggestion of cancer in the uterus when it was removed? No."
+  rationale: "Records a prior pathology result after surgery (no malignancy)."
+
+- code: "D4.MED-05"
+  evidence_span: "she was on oral hormone treatments for a period of time? Yeah."
+  rationale: "History of hormone therapy that may influence current risk assessment."
+
+- code: "D4.MED-05"
+  evidence_span: "They said it's not good for cancer, so stop taking it."
+  rationale: "Medication change (stopped HRT) due to perceived cancer risk—meds influencing care."
+
+- code: "D6.FAM-05"
+  evidence_span: "Is there any family history of cancer? No."
+  rationale: "Family history modifier—negative history for cancer affects risk stratification."
+
+- code: "D6.FAM-05"
+  evidence_span: "is there any history in the family of kidney stones? [Foreign] Uh-huh."
+  rationale: "Family history modifier—positive history of nephrolithiasis relevant to hematuria."
+
+- code: "D9.SUB-08"
+  evidence_span: "has she ever been a smoker? No. [Foreign] Never."
+  rationale: "Baseline substance use (tobacco) documented as never; impacts urologic cancer risk."
+
+- code: "UNMAPPED"
+  evidence_span: "Oh, it's been a long time, 50 years, 48, 50, 50. 48. 48."
+  rationale: "Menopause age provided, but the taxonomy lacks a specific code for menopausal status (pregnancy/lactation is covered, menopause is not)."

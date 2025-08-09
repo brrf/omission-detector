@@ -1,0 +1,103 @@
+- code: "D1.CC-01"
+  evidence_span: "I think we hadn't had physical for a very long time"
+  rationale: "Patient frames today's visit as an overdue physical, i.e., the chief reason for being seen."
+
+- code: "D4.MED-05"
+  evidence_span: "Then that will give us 3 months of being off the birth control."
+  rationale: "Documented recent discontinuation of a medication (birth control) that affects bleeding/anemia risk."
+
+- code: "D2.SEV-09"
+  evidence_span: "Right now it's actually not very heavy."
+  rationale: "Qualifies current menstrual bleeding intensity as light (severity)."
+
+- code: "D2.PAT-08"
+  evidence_span: "it's regular"
+  rationale: "Describes the timing/pattern of menses as regular."
+
+- code: "D6.DIAG-02"
+  evidence_span: "my blood work last time was back to normal. Improving."
+  rationale: "Reports prior lab results and their improvement (diagnostic history)."
+
+- code: "D8.SN-03"
+  evidence_span: "we should definitely do the blood work again."
+  rationale: "Plans repeat labs as part of follow-up."
+
+- code: "D6.DIAG-02"
+  evidence_span: "they watched it for 3 years on my, a little lung, and they said it's benign"
+  rationale: "Prior breast imaging/monitoring concluded benign—relevant diagnostic history."
+
+- code: "D8.SN-03"
+  evidence_span: "I should just go back to the normal one."
+  rationale: "Plan for routine screening mammogram going forward."
+
+- code: "D9.TRAN-10"
+  evidence_span: "I'm going to leave in a week, it's not going to happen."
+  rationale: "Scheduling/access barrier to completing mammogram before travel."
+
+- code: "D6.DIAG-02"
+  evidence_span: "No, I have not had that."
+  rationale: "States no prior colorectal cancer screening (diagnostic history)."
+
+- code: "D8.SN-03"
+  evidence_span: "I'll just do the full. The colonoscopy when I'm back."
+  rationale: "Intends to schedule colonoscopy after returning—follow-up plan."
+
+- code: "D6.DIAG-02"
+  evidence_span: "I had one probably about 5 years ago."
+  rationale: "Timing of last Pap smear provided (diagnostic history)."
+
+- code: "D9.COORD-13"
+  evidence_span: "Okay, I'm going to see a gynecologist."
+  rationale: "Identifies engagement with an external provider for care coordination."
+
+- code: "D9.COORD-13"
+  evidence_span: "if you're okay with going to Orinda, I really like Dr. Rivera."
+  rationale: "Named external clinician recommended for coordination of gynecologic care."
+
+- code: "D4.EXPO-03"
+  evidence_span: "Because I'm leaving on Tuesday."
+  rationale: "Near-term travel exposure context relevant to care planning (vaccines, scheduling)."
+
+- code: "D9.LIVE-05"
+  evidence_span: "we're pretty much partially moving there, we're not just traveling."
+  rationale: "Living situation change (partial move to Singapore) that affects care access."
+
+- code: "D9.COORD-13"
+  evidence_span: "We'll have 2 sets of doctors"
+  rationale: "Indicates multiple external care teams to coordinate across locations."
+
+- code: "D9.ACT-07"
+  evidence_span: "I'm actually doing regular, especially when I'm in -singapore."
+  rationale: "Describes baseline exercise pattern (regular when in Singapore)."
+
+- code: "D9.EDU-15"
+  evidence_span: "you could have like a mild flu-like symptoms for the next 24 hours."
+  rationale: "Health education provided about expected post-vaccine symptoms."
+
+- code: "D8.SN-03"
+  evidence_span: "Yeah, so I could wait here if you want to give me a shot or 2 shots."
+  rationale: "Acceptance/plan to receive vaccines today (flu and pneumococcal)."
+
+- code: "D6.PROC-03"
+  evidence_span: "I have, I got the COVID shot. COVID booster."
+  rationale: "Prior immunization completed—relevant procedural history."
+
+- code: "D6.PROC-03"
+  evidence_span: "It says- It says that you have"
+  rationale: "Chart-confirmed completion of shingles vaccine series (procedural history)."
+
+- code: "D4.COMO-04"
+  evidence_span: "It's just mostly that anemia."
+  rationale: "Anemia noted as an ongoing/relevant comorbidity influencing management."
+
+- code: "D7.FEAR-02"
+  evidence_span: "It scares me"
+  rationale: "Expresses worry/concern about anemia."
+
+- code: "D8.SN-03"
+  evidence_span: "You could consider taking like an iron pill once a week now."
+  rationale: "Recommendation for weekly iron supplementation—part of management plan."
+
+- code: "D8.SN-03"
+  evidence_span: "I'm going to give you some, a lab test that you'll do when you get back."
+  rationale: "Follow-up plan to complete ordered labs upon return."

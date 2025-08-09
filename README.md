@@ -35,7 +35,7 @@ Splits the raw transcript into sentences (spaCy en_core_web_sm).
 - Interpreter detection (first 6 sentences): looks for interpreter + 3–6 digit number and optional name.
 - LLM labeling (gpt‑4o‑mini) in small batches of 10 sentences, returning CLINICIAN or PATIENT per sentence.
 - Consecutive sentences with the same label are merged into turns.
-- Output is a Conversation dataclass, rendered back into diarized_transcript like:
+- Output is a Conversation dataclass, rendered back into diarized_transcript
 
 2) LangGraph pipeline (pipeline/agent_pipeline.py)
 Graph (simplified):

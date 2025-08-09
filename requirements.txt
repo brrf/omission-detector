@@ -15,3 +15,8 @@ python-dotenv>=1.0,<2.0
 langgraph>=0.2.34,<0.3
 typing-extensions>=4.10,<5.0
 ipython>=8.20,<9.0        # only used if you display() things in notebooks
+
+rapidfuzz>=3.9,<4.0       # fast, lightweight string similarity
+pandas>=2.2,<3.0          # used by the Streamlit dashboard
+streamlit>=1.36,<2.0      # lightweight dashboard
+

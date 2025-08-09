@@ -74,6 +74,30 @@ if eval_df.empty and note_df.empty and prior_df.empty and not by_run_files:
     st.info("No outputs found yet. Run the pipeline, then refresh.")
     st.stop()
 
+# Small helper to render macro blocks for a given dataframe
+def render_macro_block(df: pd.DataFrame, title_prefix: str):
+    # Strict
+    macro_p = df["precision"].mean() if "precision" in df else 0.0
+    macro_r = df["recall"].mean() if "recall" in df else 0.0
+    macro_f = df["f1"].mean() if "f1" in df else 0.0
+    avg_sim = df["avg_similarity"].mean() if "avg_similarity" in df else 0.0
+    n_runs = len(df)
+
+    col1, col2, col3, col4, col5 = st.columns(5)
+    col1.metric("Runs", n_runs)
+    col2.metric(f"{title_prefix} Precision (strict)", f"{macro_p:.3f}")
+    col3.metric(f"{title_prefix} Recall (strict)", f"{macro_r:.3f}")
+    col4.metric(f"{title_prefix} F1 (strict)", f"{macro_f:.3f}")
+    col5.metric("Avg Evidence Similarity", f"{avg_sim:.3f}")
+
+    # Code-only
+    if all(c in df.columns for c in ["precision_code","recall_code","f1_code"]):
+        st.caption("Code-only (code match irrespective of evidence span)")
+        c1, c2, c3 = st.columns(3)
+        c1.metric(f"{title_prefix} Precision (code-only)", f"{df['precision_code'].mean():.3f}")
+        c2.metric(f"{title_prefix} Recall (code-only)", f"{df['recall_code'].mean():.3f}")
+        c3.metric(f"{title_prefix} F1 (code-only)", f"{df['f1_code'].mean():.3f}")
+
 # --------- Global summary ----------
 st.subheader("Overall")
 tab1, tab2, tab3 = st.tabs([
@@ -84,79 +108,61 @@ tab1, tab2, tab3 = st.tabs([
 
 with tab1:
     if not eval_df.empty:
-        col1, col2, col3, col4, col5 = st.columns(5)
-        macro_p = eval_df["precision"].mean() if "precision" in eval_df else 0.0
-        macro_r = eval_df["recall"].mean() if "recall" in eval_df else 0.0
-        macro_f = eval_df["f1"].mean() if "f1" in eval_df else 0.0
-        avg_sim = eval_df["avg_similarity"].mean() if "avg_similarity" in eval_df else 0.0
-        n_runs = len(eval_df)
+        render_macro_block(eval_df, "Transcript")
 
-        col1.metric("Runs", n_runs)
-        col2.metric("Precision (strict)", f"{macro_p:.3f}")
-        col3.metric("Recall (strict)", f"{macro_r:.3f}")
-        col4.metric("F1 (strict)", f"{macro_f:.3f}")
-        col5.metric("Avg Evidence Similarity", f"{avg_sim:.3f}")
+        st.write("Per-run metrics")
+        cols = [
+            "run_id","n_pred","n_gold","precision","recall","f1",
+            "precision_code","recall_code","f1_code",
+            "tp","fp","fn","tp_code","fp_code","fn_code",
+            "avg_similarity","avg_rougeL_f","thr"
+        ]
+        cols = [c for c in cols if c in eval_df.columns]
+        st.dataframe(eval_df[cols], use_container_width=True)
 
-        st.write("Per-run (strict) metrics")
-        st.dataframe(
-            eval_df[["run_id","n_pred","n_gold","precision","recall","f1","avg_similarity","avg_rougeL_f","thr"]],
-            use_container_width=True
-        )
-
-        st.write("F1 distribution")
-        st.bar_chart(eval_df.set_index("run_id")["f1"])
+        st.write("F1 distribution (strict vs code-only)")
+        plot_cols = [c for c in ["f1","f1_code"] if c in eval_df.columns]
+        st.bar_chart(eval_df.set_index("run_id")[plot_cols])
     else:
         st.info("No gold_eval.csv yet.")
 
 with tab2:
     if not note_df.empty:
-        col1, col2, col3, col4, col5 = st.columns(5)
-        macro_p = note_df["precision"].mean() if "precision" in note_df else 0.0
-        macro_r = note_df["recall"].mean() if "recall" in note_df else 0.0
-        macro_f = note_df["f1"].mean() if "f1" in note_df else 0.0
-        avg_sim = note_df["avg_similarity"].mean() if "avg_similarity" in note_df else 0.0
-        n_runs = len(note_df)
+        render_macro_block(note_df, "HPI")
 
-        col1.metric("Runs", n_runs)
-        col2.metric("Precision (strict)", f"{macro_p:.3f}")
-        col3.metric("Recall (strict)", f"{macro_r:.3f}")
-        col4.metric("F1 (strict)", f"{macro_f:.3f}")
-        col5.metric("Avg Evidence Similarity", f"{avg_sim:.3f}")
+        st.write("Per-run metrics")
+        cols = [
+            "run_id","n_pred","n_gold","precision","recall","f1",
+            "precision_code","recall_code","f1_code",
+            "tp","fp","fn","tp_code","fp_code","fn_code",
+            "avg_similarity","avg_rougeL_f","thr"
+        ]
+        cols = [c for c in cols if c in note_df.columns]
+        st.dataframe(note_df[cols], use_container_width=True)
 
-        st.write("Per-run (strict) metrics")
-        st.dataframe(
-            note_df[["run_id","n_pred","n_gold","precision","recall","f1","avg_similarity","avg_rougeL_f","thr"]],
-            use_container_width=True
-        )
-
-        st.write("F1 distribution")
-        st.bar_chart(note_df.set_index("run_id")["f1"])
+        st.write("F1 distribution (strict vs code-only)")
+        plot_cols = [c for c in ["f1","f1_code"] if c in note_df.columns]
+        st.bar_chart(note_df.set_index("run_id")[plot_cols])
     else:
         st.info("No note_eval.csv yet.")
 
 with tab3:
     if not prior_df.empty:
-        col1, col2, col3, col4, col5 = st.columns(5)
-        macro_p = prior_df["precision"].mean() if "precision" in prior_df else 0.0
-        macro_r = prior_df["recall"].mean() if "recall" in prior_df else 0.0
-        macro_f = prior_df["f1"].mean() if "f1" in prior_df else 0.0
-        avg_sim = prior_df["avg_similarity"].mean() if "avg_similarity" in prior_df else 0.0
-        n_runs = len(prior_df)
+        render_macro_block(prior_df, "Prioritized")
 
-        col1.metric("Runs", n_runs)
-        col2.metric("Precision (strict)", f"{macro_p:.3f}")
-        col3.metric("Recall (strict)", f"{macro_r:.3f}")
-        col4.metric("F1 (strict)", f"{macro_f:.3f}")
-        col5.metric("Avg Evidence Similarity", f"{avg_sim:.3f}")
+        st.write("Per-run metrics")
+        cols = [
+            "run_id","n_pred","n_gold","precision","recall","f1",
+            "precision_code","recall_code","f1_code",
+            "tp","fp","fn","tp_code","fp_code","fn_code",
+            "avg_similarity","avg_rougeL_f","thr"
+        ]
+        cols = [c for c in cols if c in prior_df.columns]
+        st.dataframe(prior_df[cols], use_container_width=True)
 
-        st.write("Per-run (strict) metrics")
-        st.dataframe(
-            prior_df[["run_id","n_pred","n_gold","precision","recall","f1","avg_similarity","avg_rougeL_f","thr"]],
-            use_container_width=True
-        )
-
-        st.write("F1 distribution")
-        st.bar_chart(prior_df.set_index("run_id")["f1"])
+        st.write("F1 distribution (strict vs code-only)")
+        plot_cols = [c for c in ["f1","f1_code"] if c in prior_df.columns]
+        st.bar_chart(prior_df.set_index("run_id")[plot_cols])
     else:
         st.info("No prioritized_eval.csv yet.")
 
@@ -177,25 +183,43 @@ if choices:
                 st.write("**By-run summary**")
                 st.json(blob.get("counts", {}))
                 if blob.get("gold_eval"):
-                    st.write("**Gold overlap (strict)**")
+                    st.write("**Gold overlap — Strict**")
                     st.json({
                         "n_pred": blob["gold_eval"].get("n_pred"),
                         "n_gold": blob["gold_eval"].get("n_gold"),
                         **(blob["gold_eval"].get("strict", {}))
                     })
+                    st.write("**Gold overlap — Code-only**")
+                    st.json({
+                        "n_pred": blob["gold_eval"].get("n_pred"),
+                        "n_gold": blob["gold_eval"].get("n_gold"),
+                        **(blob["gold_eval"].get("code_only", {}))
+                    })
                 if blob.get("note_eval"):
-                    st.write("**HPI note overlap (strict)**")
+                    st.write("**HPI note overlap — Strict**")
                     st.json({
                         "n_pred": blob["note_eval"].get("n_pred"),
                         "n_gold": blob["note_eval"].get("n_gold"),
                         **(blob["note_eval"].get("strict", {}))
                     })
+                    st.write("**HPI note overlap — Code-only**")
+                    st.json({
+                        "n_pred": blob["note_eval"].get("n_pred"),
+                        "n_gold": blob["note_eval"].get("n_gold"),
+                        **(blob["note_eval"].get("code_only", {}))
+                    })
                 if blob.get("prioritized_eval"):
-                    st.write("**Prioritized omissions overlap (strict)**")
+                    st.write("**Prioritized omissions overlap — Strict**")
                     st.json({
                         "n_pred": blob["prioritized_eval"].get("n_pred"),
                         "n_gold": blob["prioritized_eval"].get("n_gold"),
                         **(blob["prioritized_eval"].get("strict", {}))
+                    })
+                    st.write("**Prioritized omissions overlap — Code-only**")
+                    st.json({
+                        "n_pred": blob["prioritized_eval"].get("n_pred"),
+                        "n_gold": blob["prioritized_eval"].get("n_gold"),
+                        **(blob["prioritized_eval"].get("code_only", {}))
                     })
             with colB:
                 st.write("**Problems**")

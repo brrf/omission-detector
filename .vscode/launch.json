@@ -9,7 +9,6 @@
         "program": "${workspaceFolder}/debug.py",
         "args": [
           "-i", "raw_data/omissions_sample_encounters_diarized.csv",
-          "-n", "0"
         ],
         "console": "integratedTerminal",
         "justMyCode": false

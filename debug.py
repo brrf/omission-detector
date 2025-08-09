@@ -44,7 +44,7 @@ from run_all import read_csv_rows, build_state_from_row
 def parse_args() -> argparse.Namespace:
     p = argparse.ArgumentParser(description="Run a single CSV row through the pipeline for debugging")
     p.add_argument("-i", "--input", default="raw_data/omissions_sample_encounters_diarized.csv", help="Path to input CSV")
-    p.add_argument("-n", "--index", type=int, default=0, help="0-based row index to run (default: 0)")
+    p.add_argument("-n", "--index", type=int, default=3, help="0-based row index to run (default: 0)")
     p.add_argument("--debug", action="store_true", help="Start debug adapter (debugpy) on given port")
     p.add_argument("--port", type=int, default=5678, help="Debug adapter port (default: 5678)")
     p.add_argument("--wait", action="store_true", help="If --debug, wait for debugger to attach before running")

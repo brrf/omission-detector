@@ -1,0 +1,119 @@
+- code: "D2.AL-06"
+  weight: 1
+  override_reason: "Symptom relief seldom drives ID differential; antipyretic/analgesic response is better captured under medication effects."
+
+- code: "D2.RAD-07"
+  weight: 1
+  override_reason: "Pain radiation adds limited value for infectious localization compared with exam/imaging and focal symptoms."
+
+- code: "D2.NUM-10"
+  weight: 3
+  override_reason: "Counts (e.g., stools/day, emesis episodes, nightly fevers) quantify severity, dehydration risk, and guide testing/disposition."
+
+- code: "D3.POS-01"
+  weight: 3
+  override_reason: "Associated positives (rigors, rash, dysuria, cough, focal pain) strongly localize source and drive workup/therapy."
+
+- code: "D3.PN-02"
+  weight: 3
+  override_reason: "Pertinent negatives (no cough, no dysuria, no neck stiffness) materially narrow source and reduce unnecessary testing."
+
+- code: "D3.CONST-03"
+  weight: 3
+  override_reason: "Fever pattern, chills, night sweats, and weight loss shift urgency and infectious differential."
+
+- code: "D3.SYS-04"
+  weight: 3
+  override_reason: "Cross‑system ROS often reveals focus/complications (e.g., cough with fever → pneumonia; rash → rickettsial/viral)."
+
+- code: "D4.MED-05"
+  weight: 3
+  override_reason: "Recent antibiotics, steroids, PPIs, or immunomodulators alter pathogen spectrum, culture yield, and C. difficile risk."
+
+- code: "D4.IMMU-07"
+  weight: 3
+  override_reason: "Immunosuppression (HIV, chemo, biologics, transplant) radically changes pathogen risk and management."
+
+- code: "D6.SELF-01"
+  weight: 3
+  override_reason: "Home antibiotics/antipyretics affect culture timing, resistance selection, and interpretation of fever response."
+
+- code: "D6.DIAG-02"
+  weight: 3
+  override_reason: "Prior cultures/susceptibilities, imaging, and labs prevent duplication and shape today’s antimicrobial plan."
+
+- code: "D6.PROC-03"
+  weight: 3
+  override_reason: "Recent surgeries, prosthetic material, and indwelling lines are common sources and change pathogens/duration."
+
+- code: "D6.CONS-04"
+  weight: 3
+  override_reason: "Surgical/IR and prior ID recommendations determine source control and antibiotic strategy."
+
+- code: "D7.PREF-03"
+  weight: 3
+  override_reason: "Preferences (OPAT vs oral step‑down, PICC acceptance) directly affect feasible route, monitoring, and adherence."
+
+- code: "D7.CULT-04"
+  weight: 1
+  override_reason: "Beliefs about vaccines, blood products, or animal‑derived meds can constrain ID therapies; modest but relevant."
+
+- code: "D8.SN-03"
+  weight: 3
+  override_reason: "Close follow‑up and explicit contingency planning are critical to detect deterioration or treatment failure in ID."
+
+- code: "D9.TRAU-01"
+  weight: 0
+  override_reason: "Remote trauma rarely informs ID differential beyond hardware presence (captured under prior procedures)."
+
+- code: "D9.STRESS-02"
+  weight: 1
+  override_reason: "Psychosocial stress seldom drives infectious etiology; exposures and immune status are more determinative."
+
+- code: "D9.CARE-03"
+  weight: 3
+  override_reason: "Caregiver capacity is pivotal for wound care, OPAT administration, and monitoring."
+
+- code: "D9.SUP-04"
+  weight: 3
+  override_reason: "Support network influences adherence and safe home management during prolonged therapy."
+
+- code: "D9.LIVE-05"
+  weight: 3
+  override_reason: "Housing/crowding and sanitation affect transmission risk (e.g., TB, scabies) and isolation feasibility."
+
+- code: "D9.OCC-06"
+  weight: 3
+  override_reason: "Occupation (healthcare, lab, agriculture) confers specific exposure risks and prophylaxis needs."
+
+- code: "D9.ACT-07"
+  weight: 3
+  override_reason: "Activities (hot‑tub use, freshwater swimming, animal handling) are classic exposure clues for ID."
+
+- code: "D9.SUB-08"
+  weight: 3
+  override_reason: "Injection drug use and alcohol use materially change pathogen risk (e.g., endocarditis) and aftercare needs."
+
+- code: "D9.TRAN-10"
+  weight: 3
+  override_reason: "Frequent labs/infusions require reliable transport; barriers may preclude safe outpatient therapy."
+
+- code: "D9.INS-11"
+  weight: 1
+  override_reason: "Coverage/pharmacy logistics can constrain antibiotic choice and OPAT feasibility."
+
+- code: "D9.PREF-12"
+  weight: 3
+  override_reason: "Site/modality preferences (home infusion vs infusion center) shape feasible treatment options."
+
+- code: "D9.COORD-13"
+  weight: 3
+  override_reason: "Coordination with surgery, IR, OPAT, and microbiology is central to ID care."
+
+- code: "D9.TECH-18"
+  weight: 1
+  override_reason: "Telehealth/portal access facilitates monitoring, lab follow‑up, and rapid response to culture updates."
+
+- code: "D9.HLIT-20"
+  weight: 3
+  override_reason: "Understanding complex regimens and line care is essential to prevent failure and adverse events."

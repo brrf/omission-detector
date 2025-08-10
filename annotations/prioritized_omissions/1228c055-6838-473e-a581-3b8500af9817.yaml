@@ -1,0 +1,43 @@
+- code: D1.CC-01
+  evidence_span: I want to talk about this cold.
+  rationale: The ORIGINAL_HPI notes URI symptoms but does not include the patient's explicit statement of the primary reason for today's visit in their own words, which adds important context.
+
+- code: D2.LOC-02
+  evidence_span: It's like all on my head and my neck now.
+  rationale: ORIGINAL_HPI lists rhinorrhea and postnasal drip but does not specify current anatomic distribution of symptoms to head and neck, which may aid in localization.
+
+- code: D2.PAT-08
+  evidence_span: now it's a constant tickle and drip.
+  rationale: ORIGINAL_HPI does not describe the temporal pattern of the rhinorrhea/postnasal drip as constant, which is relevant to symptom characterization.
+
+- code: D2.CHAR-04
+  evidence_span: a constant tickle and drip.
+  rationale: The descriptive nature of symptoms (tickle/drip) is not captured in ORIGINAL_HPI, adding qualitative detail.
+
+- code: D4.TRAJ-01
+  evidence_span: the swelling in my legs has really stopped.
+  rationale: ORIGINAL_HPI mentions absence of new edema but does not note resolution of prior swelling, which provides trajectory information.
+
+- code: D4.EXPO-03
+  evidence_span: But he's the one that got this and gave it to me.
+  rationale: ORIGINAL_HPI lacks detail on specific infectious exposure source, which is relevant to etiology.
+
+- code: D5.SLEEP-03
+  evidence_span: at night, I'm getting a tickle and all that stuff that's running down.
+  rationale: Nighttime postnasal drip symptoms are not in ORIGINAL_HPI and suggest sleep disturbance, impacting quality of life.
+
+- code: D2.AL-06
+  evidence_span: I also get massages, and when I get massages and pedicures and they massage the bottoms of my legs and my feet, I find that it helps
+  rationale: ORIGINAL_HPI mentions neuropathy but omits this alleviating factor, which is relevant for management.
+
+- code: D9.LANG-14
+  evidence_span: I know I've lost a little bit of hearing in my right ear.
+  rationale: Hearing impairment is not mentioned in ORIGINAL_HPI and may affect communication and care.
+
+- code: D6.DIAG-02
+  evidence_span: Liver tests were normal.
+  rationale: ORIGINAL_HPI does not reference these lab results, which are pertinent to comorbidities and perioperative evaluation.
+
+- code: D4.MED-05
+  evidence_span: You're taking your blood pressure med and your cholesterol med? Yep. Every day.
+  rationale: ORIGINAL_HPI notes medication for hyperlipidemia but omits antihypertensive use, which impacts cardiovascular and perioperative risk assessment.

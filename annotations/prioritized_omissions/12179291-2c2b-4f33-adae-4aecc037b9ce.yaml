@@ -1,0 +1,30 @@
+- code: D1.CC-01
+  evidence_span: "I've got- surgery scheduled for November 2nd."
+  rationale: "Adds the exact surgery date, which is critical for pre-op planning and timing of testing/medication adjustments; not specified in the HPI."
+- code: D6.DIAG-02
+  evidence_span: "there's a typo that says 4 plus 3 equals 6, but yeah, the 7, it's the 7, right?"
+  rationale: "Documents Gleason score 7 from pathology—a key risk-stratification detail absent from the HPI."
+- code: D4.TRAJ-01
+  evidence_span: "my PSA just kept going up, it almost kept, you know, kept like doubling every year"
+  rationale: "Provides PSA kinetics (near-annual doubling), which conveys aggressiveness beyond the single value in the HPI."
+- code: D6.CONS-04
+  evidence_span: "he said, tell them it's localized and curable"
+  rationale: "Captures urologist’s staging/prognostic assessment, informing treatment plan and counseling; not stated in the HPI."
+- code: D6.CONS-04
+  evidence_span: "I saw Dr. Green, my cardiologist, just about 10 days ago, and he says... can't make you any better than you already are"
+  rationale: "Recent cardiology assessment relevant to surgical clearance/optimization is not reflected in the HPI."
+- code: D4.MED-05
+  evidence_span: "when I would do the treadmill, I couldn't even get my pulse up that high, so... they cut it back to 12 and a half"
+  rationale: "Explains the reason for metoprolol dose reduction (chronotropic blunting), pertinent to peri-operative beta-blocker management and functional assessment."
+- code: D6.DIAG-02
+  evidence_span: "My EKGs always come back normal."
+  rationale: "Summarizes prior cardiac testing trend, helpful context for pre-op risk and the planned EKG; not in the HPI."
+- code: D9.SUP-04
+  evidence_span: "And Patricia's anxious just to get it out of there too"
+  rationale: "Adds spouse’s stance/support, a pertinent psychosocial factor influencing decision-making not captured in the HPI."
+- code: D8.SN-03
+  evidence_span: "I guess I have to get an EKG ahead of the surgery"
+  rationale: "Identifies a specific pre-operative test to be arranged; actionable plan detail missing from the HPI."
+- code: D8.SN-03
+  evidence_span: "my next four-month visit is actually... October 12th... so I'll see her again before the surgery"
+  rationale: "Documents a scheduled follow-up before surgery, ensuring pre-op continuity; absent from the HPI."

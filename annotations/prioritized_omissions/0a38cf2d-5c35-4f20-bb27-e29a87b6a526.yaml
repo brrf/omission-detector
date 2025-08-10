@@ -1,0 +1,30 @@
+- code: D2.SEV-09
+  evidence_span: "So you got about 2, what do we call it, 2 plus edema in your legs. 2 plus. 2 plus plus, 2 to 3 plus"
+  rationale: "Edema severity (approx. 2–3+) is not documented in the HPI; quantifying severity is important for assessment and follow-up."
+- code: D3.POS-01
+  evidence_span: "I'm still short of breath, in fact, I have to breathe real hard while I'm walking any distance."
+  rationale: "The HPI notes no worsening dyspnea but does not state that dyspnea is present; exertional dyspnea is pertinent to edema evaluation and functional capacity."
+- code: D5.ADL-01
+  evidence_span: "walking is more difficult now."
+  rationale: "Functional impact on mobility/ADLs is not captured in the HPI; demonstrates current symptom burden."
+- code: D3.CONST-03
+  evidence_span: "His weight is up Oh yeah."
+  rationale: "Recent weight gain is omitted in the HPI; supports possible volume overload relevant to edema."
+- code: D6.DIAG-02
+  evidence_span: "ultrasound of your kidneys was normal"
+  rationale: "Prior diagnostic imaging result is not in the HPI; helps contextualize CKD/edema workup by excluding structural renal causes."
+- code: D6.DIAG-02
+  evidence_span: "last time you did the heart test, the blood test for heart failure, it was normal."
+  rationale: "Heart-failure blood test (e.g., natriuretic peptide) result is omitted; a pertinent negative for edema differential."
+- code: D8.SN-03
+  evidence_span: "I think you did, every 2 weeks I was going to go."
+  rationale: "Standing plan for q2-week labs is not documented; clarifies monitoring cadence for kidney/potassium management."
+- code: D8.SN-03
+  evidence_span: "she's going to give you a couple lab tests to do."
+  rationale: "Immediate plan to obtain additional labs is omitted; records today’s workup steps for edema."
+- code: D3.POS-01
+  evidence_span: "I still have the incontinence problems with urinary and fecal."
+  rationale: "Ongoing urinary incontinence is not mentioned in the HPI; associated GU symptom relevant in the context of back pain."
+- code: D3.POS-01
+  evidence_span: "I still have the incontinence problems with urinary and fecal."
+  rationale: "Ongoing fecal incontinence is not mentioned in the HPI; neurologic red flag pertinent to back pain assessment."

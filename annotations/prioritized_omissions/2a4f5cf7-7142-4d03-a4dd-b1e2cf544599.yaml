@@ -1,0 +1,18 @@
+- code: D4.MED-05
+  evidence_span: "because that could be why you're iron deficient is you might be giving yourself an ulcer in your stomach"
+  rationale: "HPI notes ibuprofen use but not the clinician’s concern that NSAID use could cause a gastric ulcer/bleeding contributing to IDA—an important suspected etiology relevant to today’s visit."
+- code: D8.SN-03
+  evidence_span: "So you got to stop taking the ibuprofen."
+  rationale: "Medication change is not documented in HPI; stopping NSAIDs is directly pertinent to mitigating a potential GI bleeding source and affects current pain control."
+- code: D8.SN-03
+  evidence_span: "I would advise you not to wait on the colonoscopy."
+  rationale: "HPI records reluctance but omits the clinician’s recommendation to proceed promptly, which frames the immediate evaluation of unexplained iron deficiency anemia."
+- code: D8.SN-03
+  evidence_span: "They're probably also going to ask to do an endoscopy and look down into your stomach."
+  rationale: "Upper endoscopy as part of the GI workup is not mentioned in HPI; it’s a key diagnostic step for a possible upper-GI source of iron loss."
+- code: D8.SN-03
+  evidence_span: "Yes, well, CBC and the iron panel, and I ordered both of those for you too already."
+  rationale: "HPI omits tests ordered today; documenting CBC and iron studies captures the objective evaluation initiated at this visit."
+- code: D8.SN-03
+  evidence_span: "then you can go back to the ibuprofen,"
+  rationale: "Conditional guidance on resuming NSAIDs if the workup is negative is not in HPI and informs near-term analgesia planning."

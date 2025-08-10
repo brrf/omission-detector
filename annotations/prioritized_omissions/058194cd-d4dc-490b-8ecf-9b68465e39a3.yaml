@@ -1,0 +1,21 @@
+- code: D2.ON-01
+  evidence_span: "She's saying the last 6 months or so"
+  rationale: "Adds a longer duration per collateral report that conflicts with “past several weeks” in the HPI, refining chronicity of irritability."
+- code: D2.NUM-10
+  evidence_span: "The last couple weeks, I guess there's been a couple times."
+  rationale: "Provides concrete recent frequency of episodes not quantified in the HPI, informing severity/trajectory."
+- code: D2.ON-01
+  evidence_span: "presented to the emergency department on May 26th"
+  rationale: "Recent ED visit omitted from HPI; hospital-level care is directly relevant context for today’s assessment."
+- code: D1.ONCTX-03
+  evidence_span: "in context of missing a dose of his medication"
+  rationale: "Identifies an immediate trigger (nonadherence) for the ED event, guiding risk counseling and management."
+- code: D4.MED-05
+  evidence_span: "We started that medication way back in January."
+  rationale: "Establishes start timing of current psychotropic regimen, helping relate symptom course to treatment exposure."
+- code: D4.MED-05
+  evidence_span: "One is Lexapro. ... You haven't been on that in a long time."
+  rationale: "Clarifies prior SSRI use and discontinuation, pertinent to medication history/tolerability and future choices."
+- code: D9.TRAU-01
+  evidence_span: "it only happened one time, sexual abuse, you know, one time, and it was actually my wife's stepdad"
+  rationale: "Significant psychosocial trauma not captured in HPI, relevant to mental health context and counseling needs."

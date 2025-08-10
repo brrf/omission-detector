@@ -64,7 +64,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument(
         "--limit",
         type=int,
-        default=None,
+        default=6,
         help="Max number of rows to process (default: all)",
     )
     parser.add_argument(

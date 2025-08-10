@@ -1,0 +1,741 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Omission Detector – HPI Labeler (Mockup)</title>
+<style>
+  :root{
+    --bg:#0f1115;
+    --panel:#141821;
+    --muted:#1b2030;
+    --ink:#e9edf5;
+    --ink-dim:#b7c0d4;
+    --accent:#5ac8fa;
+    --accent-2:#7ef29a;
+    --warn:#ffb86b;
+    --danger:#ff6b81;
+    --ok:#7CFFCB;
+    --ring: rgba(90,200,250,.35);
+    --shadow: 0 10px 30px rgba(0,0,0,.35);
+    --radius: 14px;
+    --radius-sm: 10px;
+    --mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+    --sans: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", "Apple Color Emoji","Segoe UI Emoji";
+  }
+  *{box-sizing:border-box}
+  body{
+    margin:0; background:linear-gradient(120deg, #0f1115 0%, #0e1420 100%);
+    color:var(--ink); font-family:var(--sans);
+  }
+  header{
+    position:sticky; top:0; z-index:20; background:rgba(15,17,21,.6); backdrop-filter: blur(8px);
+    border-bottom:1px solid #1e2431;
+  }
+  .wrap{max-width:1200px; margin:0 auto; padding:18px 20px;}
+  .bar{display:flex; gap:16px; align-items:center; justify-content:space-between;}
+  .logo{display:flex; gap:10px; align-items:center; font-weight:700; letter-spacing:.3px}
+  .logo .dot{width:10px;height:10px;border-radius:50%;background:var(--accent); box-shadow:0 0 14px var(--accent)}
+  .profile{
+    display:flex; gap:8px; align-items:center; background:var(--panel); border:1px solid #22283a;
+    padding:8px 10px; border-radius:999px;
+  }
+  select, input[type="text"], textarea{
+    background:#0e1320; color:var(--ink); border:1px solid #22283a; border-radius:10px; padding:10px 12px;
+    outline:none; transition:.2s border, .2s box-shadow; font-family:var(--sans);
+  }
+  select:focus, input:focus, textarea:focus{border-color:var(--accent); box-shadow:0 0 0 6px var(--ring)}
+  textarea{width:100%; min-height:140px; resize:vertical; line-height:1.5}
+  .grid{display:grid; gap:18px; grid-template-columns: 1.2fr .8fr; align-items:start; margin-top:18px}
+  .card{
+    background:linear-gradient(180deg,#121828 0%, #101620 100%);
+    border:1px solid #1f2636; border-radius:var(--radius); box-shadow:var(--shadow); padding:16px;
+  }
+  .card h3{margin:.2rem 0 .6rem 0; font-size:1.05rem; letter-spacing:.2px}
+  .hint{color:var(--ink-dim); font-size:.9rem}
+  .row{display:flex; gap:10px; align-items:center}
+  .splitter{display:flex; gap:10px; align-items:center; margin-top:10px}
+  .btn{
+    display:inline-flex; align-items:center; gap:8px; padding:10px 14px; border-radius:12px; border:1px solid #22283a;
+    background:linear-gradient(180deg,#141b2b,#0e1420); color:var(--ink); cursor:pointer; transition:.25s transform, .25s box-shadow, .25s border;
+    user-select:none;
+  }
+  .btn:hover{border-color:#2a334a; transform:translateY(-1px)}
+  .btn.primary{border-color:#2a334a; background:linear-gradient(180deg,#1a2140,#131a2b)}
+  .btn.acc{background:linear-gradient(180deg,#1a2633,#0e1722); border-color:#2a3442; box-shadow:0 0 0 0 rgba(0,0,0,0)}
+  .btn.green{background:linear-gradient(180deg,#143323,#10251a); border-color:#2a4a38}
+  .pill{display:inline-flex; align-items:center; gap:6px; padding:4px 8px; border-radius:999px; font-size:.75rem; background:#111827; border:1px solid #22283a; color:var(--ink-dim)}
+  .pill .dot{width:7px; height:7px; border-radius:50%}
+  .pill.good{border-color:#1f3f2e; color:#b4f7d7}
+  .pill.warn{border-color:#3a3220; color:#ffd7a6}
+  .pill.bad{border-color:#46222b; color:#ffbac6}
+  .hr{height:1px; background:#1f2636; margin:12px 0}
+  /* sentence list */
+  .sent{
+    display:grid; grid-template-columns: 1fr auto; gap:8px; align-items:center;
+    padding:10px 12px; border:1px solid #1f2636; border-radius:12px; margin:8px 0; background:#0f1523;
+  }
+  .sent.selected{border-color:var(--accent); box-shadow:0 0 0 6px var(--ring)}
+  .sent .text{line-height:1.45}
+  .sent .actions{display:flex; gap:8px}
+  .tag{font-size:.75rem; padding:3px 7px; border-radius:999px; background:#111827; border:1px solid #2a334a; color:var(--ink-dim)}
+  .ghost{opacity:.66}
+  /* code picker */
+  .picker{display:grid; gap:10px; grid-template-columns:1fr 1fr; align-items:start}
+  .search{position:relative}
+  .search input{width:100%}
+  .results{
+    max-height:220px; overflow:auto; border:1px solid #1f2636; border-radius:12px; padding:6px; background:#0f1523;
+  }
+  .res{display:flex; justify-content:space-between; gap:10px; padding:8px 10px; border-radius:10px; cursor:pointer; border:1px solid transparent}
+  .res:hover{background:#121a2b; border-color:#23304a}
+  .res small{color:var(--ink-dim)}
+  .res .right{display:flex; gap:8px; align-items:center}
+  .res .w{font-family:var(--mono); background:#101826; border:1px solid #223047; padding:2px 6px; border-radius:7px}
+  .domain{margin:6px 0 2px 4px; color:#8ea0bf; font-size:.8rem; letter-spacing:.25px}
+  /* facts table */
+  table{width:100%; border-collapse:separate; border-spacing:0; font-size:.93rem}
+  th, td{padding:10px 10px; text-align:left; border-bottom:1px solid #1f2636; vertical-align:top}
+  th{color:#9fb1d6; font-weight:600}
+  tr:hover td{background:#0f1523}
+  .tiny{font-size:.8rem; color:var(--ink-dim)}
+  .inline-input{width:100%; background:#0b101b; border:1px solid #212a3f; padding:6px 8px; border-radius:8px; color:var(--ink)}
+  .priority{font-weight:700; letter-spacing:.3px}
+  .priority.high{color:#a7ffd7}
+  .priority.medium{color:#ffe9a8}
+  .priority.low{color:#ffc1c8}
+  .kbd{font-family:var(--mono); font-size:.78rem; background:#0f1523; border:1px solid #2a334a; padding:2px 6px; border-radius:6px; color:#b4bed6}
+  .footer{margin:18px 0 6px; color:#8ea0bf}
+  .muted{color:#8ea0bf}
+  .caps{letter-spacing:.5px; text-transform:uppercase; font-size:.74rem; color:#7d8fb1}
+  .chips{display:flex; gap:8px; flex-wrap:wrap}
+  .switch{display:flex; gap:8px; align-items:center}
+  .switch input{accent-color:var(--accent)}
+  .inline-select{background:#0b101b; border:1px solid #212a3f; color:var(--ink); border-radius:8px; padding:6px 8px}
+  .right-actions{display:flex; flex-wrap:wrap; gap:8px}
+  .tooltip{border-bottom:1px dotted #6b7fa7; cursor:help}
+  .empty{padding:14px; border:1px dashed #2a334a; border-radius:12px; color:#9fb1d6; text-align:center}
+  @media (max-width:1000px){ .grid{grid-template-columns:1fr} }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap bar">
+    <div class="logo"><span class="dot"></span> Omission Detector • <span class="muted">HPI Labeler</span></div>
+    <div class="profile">
+      <span class="caps">Profile</span>
+      <select id="profileSel" title="Weight profile">
+        <option value="general">General (default)</option>
+        <option value="id">Infectious Disease (ID override)</option>
+      </select>
+      <span class="hint" id="profileHint">weights from omission_framework.yaml</span>
+    </div>
+  </div>
+</header>
+
+<main class="wrap">
+  <div class="grid">
+    <!-- LEFT: Input + sentences + picker -->
+    <section class="card">
+      <h3>1) Paste HPI note</h3>
+      <textarea id="hpiInput" placeholder="Paste HPI text here…">Patient reports 3 days of fever and productive cough. Denies dyspnea or chest pain. Cough worse at night; took acetaminophen with partial relief. Recently returned from a cruise. </textarea>
+      <div class="splitter">
+        <button class="btn primary" id="splitBtn">Split into sentences</button>
+        <span class="hint">We’ll split on “. ? !” and show each sentence below.</span>
+      </div>
+
+      <div class="hr"></div>
+
+      <div class="row" style="justify-content:space-between">
+        <h3 style="margin:0">2) Label sentences</h3>
+        <span class="hint">Click a row → choose a code, polarity, value, evidence</span>
+      </div>
+      <div id="sentList"></div>
+
+      <div class="hr"></div>
+
+      <h3 style="display:flex;align-items:center;gap:10px">Code picker <span class="pill"><span class="dot" style="background:var(--accent)"></span><span id="selPreview" class="ghost">No sentence selected</span></span></h3>
+
+      <div class="picker">
+        <div>
+          <div class="search">
+            <input id="search" type="text" placeholder="Search code or keyword (e.g., onset, fever, cough, dose)">
+          </div>
+          <div id="results" class="results"></div>
+        </div>
+        <div class="card" style="padding:12px">
+          <div class="row" style="gap:10px; margin-bottom:10px">
+            <label class="caps">Polarity</label>
+            <select id="polSel" class="inline-select">
+              <option>present</option>
+              <option>denied</option>
+              <option>uncertain</option>
+            </select>
+            <label class="caps">Value</label>
+            <input id="valInput" type="text" class="inline-input" placeholder='e.g., "onset: 3 days ago" or "severity: 8/10"'>
+          </div>
+          <div class="row" style="gap:10px; margin-bottom:10px">
+            <button class="btn acc" id="grabEvidenceBtn" title="Use text selection from the sentence">Use selection as evidence</button>
+            <button class="btn" id="useSentenceBtn" title="Use whole sentence text as evidence">Use whole sentence</button>
+          </div>
+          <div class="row" style="gap:10px; margin-bottom:10px">
+            <label class="caps">Evidence</label>
+            <input id="evidenceInput" class="inline-input" placeholder="Verbatim evidence span…" />
+          </div>
+          <div class="row" style="gap:10px; margin-bottom:6px">
+            <label class="caps">Rationale</label>
+            <input id="rationaleInput" class="inline-input" placeholder="Why this code fits / clinical relevance…" />
+          </div>
+
+          <div class="chips">
+            <span id="weightPill" class="pill">Weight: <span class="kbd" id="weightNum">—</span></span>
+            <span class="pill">Code: <span class="kbd" id="codeNow">—</span></span>
+            <span class="pill">Domain: <span id="domNow" class="kbd">—</span></span>
+          </div>
+
+          <div style="display:flex; gap:10px; align-items:center; margin-top:12px">
+            <button class="btn green" id="addFactBtn">Add fact</button>
+            <span class="hint">Shortcut: press <span class="kbd">Enter</span> in Value field.</span>
+          </div>
+          <div class="hint" id="overrideNote" style="margin-top:8px; display:none">
+            <span class="tooltip">ID override</span>: weight adjusted for Infectious Disease profile.
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- RIGHT: Facts + scoring + export -->
+    <section class="card">
+      <h3>3) Your facts & scoring</h3>
+      <div id="factsWrap"></div>
+
+      <div class="footer caps">Export</div>
+      <div class="right-actions">
+        <button class="btn" id="copyHpiFacts">Copy YAML: hpi_facts.yaml</button>
+        <button class="btn" id="copyScores">Copy YAML: omission_scoring.yaml</button>
+        <button class="btn" id="downloadJson">Download JSON</button>
+        <button class="btn" id="clearAll">Clear</button>
+      </div>
+    </section>
+  </div>
+</main>
+
+<script>
+/* ----------------------- Taxonomy (from omission_framework.yaml) ----------------------- */
+const TAXONOMY = {
+  domains: [
+    { id:"D1", name:"Chief Concern & Context", items:[
+      {code:"D1.CC-01", label:"Chief concern text", weight:3},
+      {code:"D1.CC-02", label:"Concise symptom phrase", weight:3},
+      {code:"D1.ONCTX-03", label:"Precipitating context", weight:3},
+    ]},
+    { id:"D2", name:"Symptom Qualifiers (OLDCARTS+)", items:[
+      {code:"D2.ON-01", label:"Onset (timestamp)", weight:3},
+      {code:"D2.LOC-02", label:"Location", weight:3},
+      {code:"D2.DUR-03", label:"Duration (per episode)", weight:3},
+      {code:"D2.CHAR-04", label:"Character / quality", weight:3},
+      {code:"D2.AG-05", label:"Aggravating factors", weight:3},
+      {code:"D2.AL-06", label:"Alleviating factors", weight:3},
+      {code:"D2.RAD-07", label:"Radiation", weight:3},
+      {code:"D2.PAT-08", label:"Timing/pattern", weight:3},
+      {code:"D2.SEV-09", label:"Severity / intensity", weight:3},
+      {code:"D2.NUM-10", label:"Quantifier / count", weight:1},
+    ]},
+    { id:"D3", name:"Associated & Pertinent Negatives", items:[
+      {code:"D3.POS-01", label:"Associated positives", weight:1},
+      {code:"D3.PN-02", label:"Pertinent negatives", weight:1},
+      {code:"D3.CONST-03", label:"Constitutional symptoms", weight:1},
+      {code:"D3.SYS-04", label:"System-specific review", weight:0},
+    ]},
+    { id:"D4", name:"Temporal & Modifier Context", items:[
+      {code:"D4.TRAJ-01", label:"Symptom trajectory", weight:3},
+      {code:"D4.BASE-02", label:"Baseline status", weight:3},
+      {code:"D4.EXPO-03", label:"Exposure / travel / contact", weight:3},
+      {code:"D4.COMO-04", label:"Relevant comorbidities", weight:3},
+      {code:"D4.MED-05", label:"Meds influencing symptom", weight:1},
+      {code:"D4.PREG-06", label:"Pregnancy / lactation", weight:3},
+      {code:"D4.IMMU-07", label:"Immune status", weight:1},
+    ]},
+    { id:"D5", name:"Functional Impact", items:[
+      {code:"D5.ADL-01", label:"ADL limitation", weight:1},
+      {code:"D5.WORK-02", label:"Occupational impact", weight:1},
+      {code:"D5.SLEEP-03", label:"Sleep disturbance", weight:1},
+      {code:"D5.QOL-04", label:"Quality-of-life metric", weight:0},
+    ]},
+    { id:"D6", name:"Prior Interventions & Diagnostic History", items:[
+      {code:"D6.SELF-01", label:"Self-care attempted", weight:1},
+      {code:"D6.DIAG-02", label:"Prior diagnostics", weight:1},
+      {code:"D6.PROC-03", label:"Prior procedures", weight:1},
+      {code:"D6.CONS-04", label:"Specialist input", weight:1},
+      {code:"D6.FAM-05", label:"Family history modifier", weight:0},
+    ]},
+    { id:"D7", name:"Patient Goals & Perspective", items:[
+      {code:"D7.GOAL-01", label:"Stated goal / desired outcome", weight:1},
+      {code:"D7.FEAR-02", label:"Fear / concern", weight:1},
+      {code:"D7.PREF-03", label:"Treatment preference / refusal", weight:1},
+      {code:"D7.CULT-04", label:"Cultural / spiritual factor", weight:0},
+    ]},
+    { id:"D8", name:"Risk & Safety-Net", items:[
+      {code:"D8.RF-01", label:"Red-flag mentioned", weight:3},
+      {code:"D8.RP-02", label:"Return precautions", weight:3},
+      {code:"D8.SN-03", label:"Safety-net plan / follow-up", weight:1},
+      {code:"D8.CAP-04", label:"Capacity & consent", weight:1},
+    ]},
+    { id:"D9", name:"Psychosocial & Context", items:[
+      {code:"D9.TRAU-01", label:"Past trauma / adverse experience", weight:1},
+      {code:"D9.STRESS-02", label:"Recent psychosocial stressor", weight:3},
+      {code:"D9.CARE-03", label:"Caregiver role / burden", weight:1},
+      {code:"D9.SUP-04", label:"Social support / key relationships", weight:1},
+      {code:"D9.LIVE-05", label:"Living situation & housing", weight:1},
+      {code:"D9.OCC-06", label:"Occupation & work context", weight:1},
+      {code:"D9.ACT-07", label:"Lifestyle activity pattern", weight:1},
+      {code:"D9.SUB-08", label:"Substance use baseline / change", weight:1},
+      {code:"D9.SDOH-09", label:"Resource strain / basic needs", weight:3},
+      {code:"D9.TRAN-10", label:"Transportation / access barrier", weight:1},
+      {code:"D9.INS-11", label:"Insurance / pharmacy logistics", weight:0},
+      {code:"D9.PREF-12", label:"Care-delivery preference / conflict", weight:1},
+      {code:"D9.COORD-13", label:"External care team / providers", weight:1},
+      {code:"D9.LANG-14", label:"Communication & language needs", weight:3},
+      {code:"D9.EDU-15", label:"Health-education / skill instruction", weight:1},
+      {code:"D9.SAF-16", label:"Interpersonal / home safety risk", weight:3},
+      {code:"D9.LEG-17", label:"Legal / guardianship constraints", weight:1},
+      {code:"D9.TECH-18", label:"Technology access for care", weight:0},
+      {code:"D9.ISO-19", label:"Social isolation / loneliness", weight:1},
+      {code:"D9.HLIT-20", label:"Health literacy & learning needs", weight:1},
+    ]},
+  ]
+};
+
+// Infectious Disease profile overrides (from infectious_disease.yaml)
+const ID_OVERRIDES = {
+  "D2.AL-06": {weight:1, why:"Symptom relief seldom drives ID differential."},
+  "D2.RAD-07":{weight:1, why:"Pain radiation adds limited value for infectious localization."},
+  "D2.NUM-10":{weight:3, why:"Counts quantify severity & dehydration risk."},
+  "D3.POS-01":{weight:3, why:"Associated positives localize source."},
+  "D3.PN-02": {weight:3, why:"Pertinent negatives narrow source."},
+  "D3.CONST-03":{weight:3, why:"Constitutional symptoms shift urgency."},
+  "D3.SYS-04":{weight:3, why:"Cross-system ROS reveals focus/complications."},
+  "D4.MED-05":{weight:3, why:"Recent meds alter pathogen spectrum."},
+  "D4.IMMU-07":{weight:3, why:"Immunosuppression changes pathogen risk."},
+  "D6.SELF-01":{weight:3, why:"Home antibiotics affect cultures & resistance."},
+  "D6.DIAG-02":{weight:3, why:"Prior cultures/imaging shape therapy."},
+  "D6.PROC-03":{weight:3, why:"Recent surgeries/lines change pathogens."},
+  "D6.CONS-04":{weight:3, why:"Prior ID/IR recs determine strategy."},
+  "D7.PREF-03":{weight:3, why:"Preferences affect feasible route/OPAT."},
+  "D7.CULT-04":{weight:1, why:"Modest but relevant constraints."},
+  "D8.SN-03":{weight:3, why:"Close follow-up critical in ID."},
+  "D9.TRAU-01":{weight:0, why:"Remote trauma rarely informs ID differential."},
+  "D9.STRESS-02":{weight:1, why:"Stress seldom drives infectious etiology."},
+  "D9.CARE-03":{weight:3, why:"Caregiver capacity pivotal for OPAT/monitoring."},
+  "D9.SUP-04": {weight:3, why:"Support influences adherence & safety."},
+  "D9.LIVE-05":{weight:3, why:"Housing/crowding affect transmission & isolation."},
+  "D9.OCC-06": {weight:3, why:"Occupation confers exposure risks."},
+  "D9.ACT-07": {weight:3, why:"Activities are classic exposure clues."},
+  "D9.SUB-08": {weight:3, why:"IDU/alcohol change pathogen risk."},
+  "D9.TRAN-10":{weight:3, why:"Transport barriers preclude OPAT."},
+  "D9.INS-11": {weight:1, why:"Coverage constrains antibiotic choice."},
+  "D9.PREF-12":{weight:3, why:"Site/modality preferences shape options."},
+  "D9.COORD-13":{weight:3, why:"Coordination central to ID care."},
+  "D9.TECH-18":{weight:1, why:"Telehealth/portal facilitate monitoring."},
+  "D9.HLIT-20":{weight:3, why:"Understanding line care prevents failure."},
+};
+
+const codeIndex = {}; // code -> item + domain
+TAXONOMY.domains.forEach(d=>{
+  d.items.forEach(it=> codeIndex[it.code] = {...it, domainId:d.id, domainName:d.name});
+});
+
+const state = {
+  profile: "general",
+  sentences: [],
+  selectedIdx: null,
+  codeSel: null,
+  facts: [] // {id, sentIdx, sentence, code, label, domainId, domainName, weight, polarity, value, evidence, rationale, status, flags{}, materiality, priority}
+};
+
+const qs = (s)=>document.querySelector(s);
+const qsa = (s)=>Array.from(document.querySelectorAll(s));
+
+/* ----------------------- UI Wiring ----------------------- */
+const profileSel = qs('#profileSel');
+const profileHint = qs('#profileHint');
+profileSel.addEventListener('change', ()=>{
+  state.profile = profileSel.value;
+  profileHint.textContent = state.profile==='id' ? 'ID-specific weights (overrides applied)' : 'weights from omission_framework.yaml';
+  renderFacts();
+});
+
+qs('#splitBtn').addEventListener('click', ()=> {
+  const txt = qs('#hpiInput').value || '';
+  state.sentences = splitSentences(txt);
+  state.selectedIdx = null;
+  renderSentences();
+  renderPickerPreview();
+});
+
+function splitSentences(text){
+  // simple splitter: keep punctuation
+  const parts = text.split(/(?<=[\.\?\!])\s+/).map(s=>s.trim()).filter(Boolean);
+  return parts;
+}
+
+function renderSentences(){
+  const box = qs('#sentList');
+  box.innerHTML = '';
+  if (!state.sentences.length) {
+    box.innerHTML = `<div class="empty">No sentences yet. Paste HPI and click “Split into sentences”.</div>`;
+    return;
+  }
+  state.sentences.forEach((s, i)=>{
+    const div = document.createElement('div');
+    div.className = 'sent' + (state.selectedIdx===i?' selected':'');
+    div.innerHTML = `
+      <div class="text" id="sent-${i}">${escapeHtml(s)}</div>
+      <div class="actions">
+        ${factChipForSentence(i)}
+        <button class="btn" data-action="label" data-i="${i}">Label</button>
+      </div>
+    `;
+    div.addEventListener('click', (e)=>{
+      if (e.target.dataset.action==='label' || e.currentTarget===div) {
+        state.selectedIdx = i;
+        renderSentences();
+        renderPickerPreview();
+      }
+    });
+    box.appendChild(div);
+  });
+}
+
+function factChipForSentence(i){
+  const f = state.facts.find(x=>x.sentIdx===i);
+  if(!f) return `<span class="tag ghost">unlabeled</span>`;
+  const pr = priorityClass(f.priority);
+  return `<span class="tag"> ${f.code} • w:${getWeight(f.code)} </span>
+          <span class="tag ${pr}"> ${f.priority||'—'} </span>`;
+}
+
+function renderPickerPreview(){
+  const span = qs('#selPreview');
+  const idx = state.selectedIdx;
+  if (idx==null) { span.textContent = 'No sentence selected'; span.classList.add('ghost'); }
+  else { span.textContent = trimEllips(state.sentences[idx], 80); span.classList.remove('ghost'); }
+  // Reset picker context (keep evidence/value/polarity if user wants)
+  qs('#codeNow').textContent = '—';
+  qs('#domNow').textContent = '—';
+  qs('#weightNum').textContent = '—';
+  qs('#overrideNote').style.display = 'none';
+  state.codeSel = null;
+  qs('#search').value = '';
+  renderResults('');
+}
+
+function renderResults(query){
+  const box = qs('#results');
+  const term = (query||'').toLowerCase();
+  box.innerHTML = '';
+  TAXONOMY.domains.forEach(d=>{
+    const hits = d.items.filter(it=>{
+      const hay = `${it.code} ${it.label} ${d.name}`.toLowerCase();
+      return !term || hay.includes(term);
+    });
+    if(!hits.length) return;
+    const lab = document.createElement('div');
+    lab.className = 'domain';
+    lab.textContent = `${d.id} — ${d.name}`;
+    box.appendChild(lab);
+    hits.forEach(it=>{
+      const row = document.createElement('div');
+      row.className = 'res';
+      row.innerHTML = `
+        <div>
+          <div><strong>${it.code}</strong> — ${escapeHtml(it.label)}</div>
+          <small>${d.name}</small>
+        </div>
+        <div class="right">
+          <span class="w">w:${getWeight(it.code)}</span>
+          ${state.profile==='id' && ID_OVERRIDES[it.code] ? `<span class="pill warn tiny">ID override</span>` : ``}
+        </div>`;
+      row.addEventListener('click', ()=>{
+        state.codeSel = {...it, domainId:d.id, domainName:d.name};
+        qs('#codeNow').textContent = it.code;
+        qs('#domNow').textContent = `${d.id}`;
+        qs('#weightNum').textContent = getWeight(it.code);
+        qs('#overrideNote').style.display = (state.profile==='id' && ID_OVERRIDES[it.code]) ? 'block' : 'none';
+      });
+      box.appendChild(row);
+    });
+  });
+}
+
+qs('#search').addEventListener('input', (e)=> renderResults(e.target.value));
+
+/* Evidence helpers */
+qs('#useSentenceBtn').addEventListener('click', ()=>{
+  const idx = state.selectedIdx; if (idx==null) return;
+  qs('#evidenceInput').value = state.sentences[idx];
+});
+qs('#grabEvidenceBtn').addEventListener('click', ()=>{
+  const idx = state.selectedIdx; if (idx==null) return;
+  const sel = window.getSelection();
+  const within = qs(`#sent-${idx}`);
+  let chosen = '';
+  if (sel && sel.rangeCount>0) {
+    const range = sel.getRangeAt(0);
+    if (within.contains(range.commonAncestorContainer)) {
+      chosen = range.toString();
+    }
+  }
+  if (!chosen) chosen = state.sentences[idx];
+  qs('#evidenceInput').value = chosen.trim();
+});
+
+/* Add fact */
+function newId(){ return 'f_'+Math.random().toString(36).slice(2,9); }
+qs('#addFactBtn').addEventListener('click', addFact);
+qs('#valInput').addEventListener('keydown', (e)=>{ if(e.key==='Enter'){ e.preventDefault(); addFact(); } });
+
+function addFact(){
+  const idx = state.selectedIdx;
+  if (idx==null){ alert('Select a sentence first.'); return; }
+  if (!state.codeSel){ alert('Pick a taxonomy code.'); return; }
+  const pol = qs('#polSel').value || 'present';
+  const val = qs('#valInput').value.trim();
+  const ev  = qs('#evidenceInput').value.trim() || state.sentences[idx];
+  const rat = qs('#rationaleInput').value.trim();
+
+  const weight = getWeight(state.codeSel.code);
+  const fact = {
+    id: newId(),
+    sentIdx: idx,
+    sentence: state.sentences[idx],
+    code: state.codeSel.code,
+    label: state.codeSel.label,
+    domainId: state.codeSel.domainId,
+    domainName: state.codeSel.domainName,
+    weight,
+    polarity: pol,
+    value: val || null,
+    evidence: ev,
+    rationale: rat || null,
+    status: 'present', // labelers can change to 'omitted'/'conflict' for scoring
+    flags: {redundant:false, recent:false, acute:false, highly_relevant:false, active_today:true, prechart:false},
+    materiality: 0,
+    priority: null,
+  };
+  recalc(fact);
+  // Replace any existing fact for this sentence for simplicity
+  const idxExisting = state.facts.findIndex(f=>f.sentIdx===idx);
+  if(idxExisting>=0) state.facts.splice(idxExisting,1,fact); else state.facts.push(fact);
+  renderSentences();
+  renderFacts();
+}
+
+/* ----------------------- Scoring ----------------------- */
+function getWeight(code){
+  if(state.profile==='id' && ID_OVERRIDES[code]) return ID_OVERRIDES[code].weight;
+  return (codeIndex[code]?.weight ?? 0);
+}
+function recalc(f){
+  // Only meaningful for omitted/conflict; we still compute preview.
+  const tw = getWeight(f.code);
+  const recencyBonus = (f.flags.recent || f.flags.acute) ? 1 : 0;
+  const linkageBonus = f.flags.highly_relevant ? 1 : 0;
+  const redundancyPenalty = f.flags.redundant ? 1 : 0;
+  const activeBonus = f.flags.active_today ? 1 : 0;
+  const prechartBonus = (f.status==='omitted' && f.flags.prechart) ? 3 : 0;
+  f.materiality = tw + recencyBonus + linkageBonus - redundancyPenalty + activeBonus + prechartBonus;
+  if (f.materiality >= 4) f.priority = 'high';
+  else if (f.materiality >= 3) f.priority = 'medium';
+  else if (f.materiality >= 2) f.priority = 'low';
+  else f.priority = null;
+}
+
+/* ----------------------- Facts table ----------------------- */
+function renderFacts(){
+  const box = qs('#factsWrap');
+  if(!state.facts.length){
+    box.innerHTML = `<div class="empty">No facts yet. Select a sentence, pick a code, and click “Add fact”.</div>`;
+    return;
+  }
+  let rows = state.facts.map(f=>{
+    const pr = priorityClass(f.priority);
+    return `
+      <tr data-id="${f.id}">
+        <td class="tiny">${escapeHtml(trimEllips(f.sentence, 70))}<br/><span class="kbd">evidence:</span> ${escapeHtml(trimEllips(f.evidence||'', 70))}</td>
+        <td><div><strong>${f.code}</strong> <span class="tiny">(${escapeHtml(f.label)})</span><br/><span class="tiny">${f.domainId}</span></div></td>
+        <td><span class="kbd">w:${getWeight(f.code)}</span></td>
+        <td>
+          <select class="inline-select edit-pol">
+            ${['present','denied','uncertain'].map(p=>`<option ${p===f.polarity?'selected':''}>${p}</option>`).join('')}
+          </select>
+          <input class="inline-input edit-val" placeholder='normalized value (e.g., "onset: 3 days ago")' value="${escapeAttr(f.value||'')}">
+        </td>
+        <td>
+          <select class="inline-select edit-status" title="For scoring">
+            ${['present','omitted','conflict'].map(s=>`<option ${s===f.status?'selected':''}>${s}</option>`).join('')}
+          </select>
+          <div class="chips" style="margin-top:6px">
+            ${flagToggle('recent', f.flags.recent)}
+            ${flagToggle('acute', f.flags.acute)}
+            ${flagToggle('highly_relevant', f.flags.highly_relevant)}
+            ${flagToggle('active_today', f.flags.active_today)}
+            ${flagToggle('redundant', f.flags.redundant)}
+            ${flagToggle('prechart', f.flags.prechart)}
+          </div>
+        </td>
+        <td class="priority ${pr}">
+          ${f.priority?f.priority:''}
+          <div class="tiny">mat: ${f.materiality}</div>
+        </td>
+        <td>
+          <input class="inline-input edit-rat" placeholder="brief rationale…" value="${escapeAttr(f.rationale||'')}">
+          <div class="right-actions" style="margin-top:6px">
+            <button class="btn" data-act="copyEv">Copy evidence</button>
+            <button class="btn" data-act="del">Remove</button>
+          </div>
+        </td>
+      </tr>
+    `;
+  }).join('');
+  box.innerHTML = `
+    <table>
+      <thead>
+        <tr>
+          <th>Sentence / Evidence</th><th>Code</th><th>Weight</th><th>Polarity & Value</th><th>Status & Signals</th><th>Priority</th><th>Rationale & Actions</th>
+        </tr>
+      </thead>
+      <tbody>${rows}</tbody>
+    </table>
+    <div class="hint" style="margin-top:8px">
+      Scoring = taxonomy_weight + (recent/acute) + (highly_relevant) − (redundant) + (active_today) + (prechart if omitted).
+      Profile: <strong>${state.profile==='id'?'Infectious Disease':'General'}</strong>.
+    </div>
+  `;
+
+  // wire events
+  qsa('tr[data-id]').forEach(tr=>{
+    const id = tr.getAttribute('data-id');
+    const fact = state.facts.find(f=>f.id===id);
+    tr.querySelector('.edit-pol').addEventListener('change', e=>{ fact.polarity=e.target.value; recalc(fact); renderSentences(); renderFacts(); });
+    tr.querySelector('.edit-val').addEventListener('input', e=>{ fact.value = e.target.value; });
+    tr.querySelector('.edit-status').addEventListener('change', e=>{ fact.status=e.target.value; recalc(fact); renderSentences(); renderFacts(); });
+    tr.querySelectorAll('input[type=checkbox]').forEach(cb=>{
+      cb.addEventListener('change', e=>{ fact.flags[cb.name] = cb.checked; recalc(fact); renderSentences(); renderFacts(); });
+    });
+    tr.querySelector('.edit-rat').addEventListener('input', e=>{ fact.rationale = e.target.value; });
+    tr.querySelector('[data-act="del"]').addEventListener('click', ()=>{ state.facts = state.facts.filter(x=>x.id!==id); renderSentences(); renderFacts(); });
+    tr.querySelector('[data-act="copyEv"]').addEventListener('click', ()=>{ copyText(fact.evidence||''); });
+  });
+}
+
+/* helpers to render chips */
+function flagToggle(name, val){
+  const titles = {
+    recent:'recent (≤14d)', acute:'acute', highly_relevant:'highly relevant', active_today:'active today',
+    redundant:'redundant', prechart:'pre‑chart'
+  };
+  return `<label class="switch tiny">
+    <input type="checkbox" name="${name}" ${val?'checked':''}> ${titles[name]}
+  </label>`;
+}
+function priorityClass(p){ return p==='high'?'high': p==='medium'?'medium': p==='low'?'low':'ghost'; }
+
+/* ----------------------- Export ----------------------- */
+qs('#copyHpiFacts').addEventListener('click', ()=>{
+  const list = state.facts
+    .filter(f=>f.status==='present')
+    .map(f=>({
+      code:f.code,
+      evidence_span: f.evidence || f.sentence,
+      rationale: f.rationale || ''
+    }));
+  const yaml = toFactsYAML(list);
+  copyText(yaml, 'HPI facts YAML copied!');
+});
+qs('#copyScores').addEventListener('click', ()=>{
+  const list = state.facts
+    .filter(f=>f.status==='omitted' || f.status==='conflict')
+    .map(f=>({
+      status:f.status,
+      code:f.code,
+      taxonomy_weight:getWeight(f.code),
+      redundant:!!f.flags.redundant,
+      recent:!!f.flags.recent,
+      acute:!!f.flags.acute,
+      highly_relevant:!!f.flags.highly_relevant,
+      active_today:!!f.flags.active_today,
+      prechart:!!f.flags.prechart,
+      materiality:f.materiality,
+      priority:f.priority,
+      reason: f.rationale || '—'
+    }));
+  const yaml = toScoresYAML(list);
+  copyText(yaml, 'Omission scoring YAML copied!');
+});
+qs('#downloadJson').addEventListener('click', ()=>{
+  const blob = new Blob([JSON.stringify(state,null,2)], {type:'application/json'});
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = 'labeler_state.json';
+  a.click();
+});
+qs('#clearAll').addEventListener('click', ()=>{
+  if(!confirm('Clear all facts?')) return;
+  state.facts = [];
+  renderSentences();
+  renderFacts();
+});
+
+/* YAML makers (simple string builders) */
+function toFactsYAML(arr){
+  if(!arr.length) return '# hpi_facts.yaml (empty)\n[]\n';
+  return arr.map(x=>`- code: "${x.code}"
+  evidence_span: "${escapeYaml(x.evidence_span)}"
+  rationale: "${escapeYaml(x.rationale)}"`).join('\n') + '\n';
+}
+function toScoresYAML(arr){
+  if(!arr.length) return '# omission_scoring.yaml (empty)\n[]\n';
+  return arr.map(x=>`- status: "${x.status}"
+  code: "${x.code}"
+  taxonomy_weight: ${x.taxonomy_weight}
+  redundant: ${x.redundant}
+  recent: ${x.recent}
+  acute: ${x.acute}
+  highly_relevant: ${x.highly_relevant}
+  active_today: ${x.active_today}
+  prechart: ${x.prechart}
+  materiality: ${x.materiality}
+  priority: ${x.priority ? '"'+x.priority+'"' : 'null'}
+  reason: "${escapeYaml(x.reason)}"`).join('\n') + '\n';
+}
+
+/* ----------------------- Small Utilities ----------------------- */
+function trimEllips(s, n){ return s.length>n ? s.slice(0,n-1)+'…' : s; }
+function escapeHtml(s=''){ return s.replace(/[&<>"]/g, c=>({ '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;' }[c])) }
+function escapeAttr(s=''){ return (''+s).replace(/"/g,'&quot;'); }
+function escapeYaml(s=''){ return (''+s).replace(/"/g,'\\"'); }
+function copyText(txt, msg='Copied!'){
+  navigator.clipboard.writeText(txt).then(()=>{
+    toast(msg);
+  });
+}
+function toast(msg){
+  const t = document.createElement('div');
+  t.textContent = msg;
+  t.style.position='fixed'; t.style.bottom='18px'; t.style.right='18px';
+  t.style.background='rgba(20,26,40,.92)'; t.style.border='1px solid #2a334a'; t.style.padding='10px 12px';
+  t.style.borderRadius='10px'; t.style.boxShadow='var(--shadow)'; t.style.zIndex=99;
+  document.body.appendChild(t);
+  setTimeout(()=>t.remove(), 1400);
+}
+
+/* boot */
+renderResults('');
+renderFacts();
+renderSentences();
+renderPickerPreview();
+</script>
+</body>
+</html>

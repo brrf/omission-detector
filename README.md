@@ -28,10 +28,14 @@ python run_all.py \
 ```
 
 #### Start CDI specialist application
+```
 python demo_app/app.py
+```
 
 #### View Streamlit dashboard
+```
 streamlit run dashboard.py
+```
 
 ## How It Works (end‑to‑end)
 1) Diarization (scripts/preprocess_csv.py → loaders/parse_diarized_text.py)
